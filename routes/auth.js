@@ -165,7 +165,10 @@ router.post('/register', [
 // @desc    Google OAuth login/register
 // @access  Public
 router.post('/google', [
-  body('token').notEmpty().withMessage('Google token is required')
+  body('token').notEmpty().withMessage('Google token is required'),
+  body('role').optional().isIn(['customer', 'seller', 'wholesaler']).withMessage('Invalid role'),
+  body('businessName').optional().isString().withMessage('Business name must be a string'),
+  body('businessType').optional().isIn(['individual', 'partnership', 'corporation', 'llc', 'proprietorship']).withMessage('Invalid business type')
 ], async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -173,7 +176,7 @@ router.post('/google', [
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { token } = req.body;
+    const { token, role, businessName, businessType } = req.body;
 
     // Verify Google token
     const ticket = await googleClient.verifyIdToken({
@@ -213,9 +216,25 @@ router.post('/google', [
         googleEmail: email,
         googlePicture: picture,
         phone: '', // Will be required to complete profile
-        role: 'customer',
+        role: role || 'customer',
         emailVerified: true
       });
+
+      // Add business details for sellers/wholesalers
+      if (role === 'seller' || role === 'wholesaler') {
+        user.businessName = businessName;
+        user.businessType = businessType;
+        
+        // Apply special offers for new sellers/wholesalers
+        user.specialOffers.isEligible = true;
+        const offers = getSpecialOffers(role);
+        user.specialOffers.offersApplied = offers.map(offer => ({
+          offerId: offer.id,
+          offerName: offer.name,
+          discountPercentage: offer.discountPercentage,
+          validUntil: new Date(Date.now() + offer.validDays * 24 * 60 * 60 * 1000)
+        }));
+      }
 
       user.calculateProfileCompletion();
       await user.save();
@@ -236,7 +255,8 @@ router.post('/google', [
         isVerified: user.isVerified,
         profileCompleted: user.profileCompleted,
         profileCompletionPercentage: user.profileCompletionPercentage,
-        googlePicture: user.googlePicture
+        googlePicture: user.googlePicture,
+        specialOffers: user.specialOffers
       }
     });
 

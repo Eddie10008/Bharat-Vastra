@@ -4,11 +4,13 @@ import { useForm } from 'react-hook-form';
 import { useAuth } from '../contexts/AuthContext';
 import { Eye, EyeOff, Mail, Lock, User, Phone, Building, CheckCircle, AlertCircle, Shirt, Crown, Sparkles } from 'lucide-react';
 import toast from 'react-hot-toast';
+import GoogleLogin from '../components/auth/GoogleLogin';
 
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const [selectedRole, setSelectedRole] = useState('customer');
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
@@ -43,6 +45,18 @@ const RegisterPage = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleGoogleSuccess = (result) => {
+    setGoogleLoading(false);
+    if (result.success) {
+      navigate('/complete-profile');
+    }
+  };
+
+  const handleGoogleError = (error) => {
+    setGoogleLoading(false);
+    console.error('Google registration error:', error);
   };
 
   const handleRoleChange = (role) => {
@@ -136,6 +150,36 @@ const RegisterPage = () => {
                   <div className="text-center mb-6">
                     <h2 className="text-2xl font-bold text-gray-900 mb-2">Basic Information</h2>
                     <p className="text-gray-600">Tell us about yourself</p>
+                  </div>
+
+                  {/* Quick Signup Options */}
+                  <div className="mb-6">
+                    <div className="relative">
+                      <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-t border-gray-300" />
+                      </div>
+                      <div className="relative flex justify-center text-sm">
+                        <span className="px-2 bg-white text-gray-500">Quick signup with</span>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-4">
+                      <GoogleLogin
+                        onSuccess={handleGoogleSuccess}
+                        onError={handleGoogleError}
+                        className="w-full"
+                        isRegistration={true}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="relative">
+                    <div className="absolute inset-0 flex items-center">
+                      <div className="w-full border-t border-gray-300" />
+                    </div>
+                    <div className="relative flex justify-center text-sm">
+                      <span className="px-2 bg-white text-gray-500">Or create account with email</span>
+                    </div>
                   </div>
 
                   {/* Name Fields */}
@@ -605,7 +649,7 @@ const RegisterPage = () => {
               <div className="space-y-4">
                 <div className="p-4 border border-orange-200 rounded-lg bg-orange-50">
                   <div className="flex items-start space-x-3">
-                                            <Shirt className="w-6 h-6 text-orange-600 mt-1" />
+                    <Shirt className="w-6 h-6 text-orange-600 mt-1" />
                     <div>
                       <h3 className="font-semibold text-gray-900">Traditional Sarees</h3>
                       <p className="text-sm text-gray-600">Elegant silk, cotton, and designer sarees</p>

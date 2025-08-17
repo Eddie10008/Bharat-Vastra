@@ -123,10 +123,20 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Google OAuth login
-  const googleLogin = async (token) => {
+  const googleLogin = async (token, role = null, businessInfo = null) => {
     try {
       dispatch({ type: 'AUTH_START' });
-      const response = await axios.post('/api/auth/google', { token });
+      
+      const requestData = { token };
+      if (role) {
+        requestData.role = role;
+        if (businessInfo) {
+          requestData.businessName = businessInfo.businessName;
+          requestData.businessType = businessInfo.businessType;
+        }
+      }
+      
+      const response = await axios.post('/api/auth/google', requestData);
       
       const { token: jwtToken, user } = response.data;
       localStorage.setItem('token', jwtToken);
@@ -136,10 +146,10 @@ export const AuthProvider = ({ children }) => {
         payload: { user, token: jwtToken }
       });
       
-      toast.success('Google login successful!');
+      toast.success(role ? 'Account created successfully!' : 'Google login successful!');
       return { success: true };
     } catch (error) {
-      const message = error.response?.data?.message || 'Google login failed';
+      const message = error.response?.data?.message || 'Google authentication failed';
       dispatch({ type: 'AUTH_FAILURE', payload: message });
       toast.error(message);
       return { success: false, error: message };

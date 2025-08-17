@@ -4,7 +4,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
-const GoogleLogin = ({ onSuccess, onError, className = '' }) => {
+const GoogleLogin = ({ onSuccess, onError, className = '', isRegistration = false }) => {
   const { googleLogin } = useAuth();
   const navigate = useNavigate();
 
@@ -15,15 +15,27 @@ const GoogleLogin = ({ onSuccess, onError, className = '' }) => {
         if (onSuccess) {
           onSuccess(result);
         } else {
-          navigate('/');
+          // Default behavior - navigate to home or complete profile
+          if (result.user && !result.user.profileCompleted) {
+            navigate('/complete-profile');
+          } else {
+            navigate('/');
+          }
+        }
+        
+        // Show success message
+        if (isRegistration) {
+          toast.success('Account created successfully with Google!');
+        } else {
+          toast.success('Login successful!');
         }
       }
     } catch (error) {
-      console.error('Google login error:', error);
+      console.error('Google auth error:', error);
       if (onError) {
         onError(error);
       } else {
-        toast.error('Google login failed');
+        toast.error(isRegistration ? 'Failed to create account with Google' : 'Google login failed');
       }
     }
   };
@@ -33,7 +45,7 @@ const GoogleLogin = ({ onSuccess, onError, className = '' }) => {
     if (onError) {
       onError(error);
     } else {
-      toast.error('Google login failed');
+      toast.error(isRegistration ? 'Failed to create account with Google' : 'Google login failed');
     }
   };
 
@@ -45,7 +57,7 @@ const GoogleLogin = ({ onSuccess, onError, className = '' }) => {
         useOneTap
         theme="outline"
         size="large"
-        text="continue_with"
+        text={isRegistration ? "signup_with" : "continue_with"}
         shape="rectangular"
         locale="en"
       />
