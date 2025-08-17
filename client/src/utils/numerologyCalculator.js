@@ -56,7 +56,7 @@ export const numerologyProfiles = {
     gemstones: ["Ruby", "Carnelian", "Red Jasper"],
     themes: ["Leadership", "Innovation", "Independence"],
     personality: "Ambitious, confident, and pioneering",
-    discount: 10,
+    discount: 11,
     productRecommendations: ["Bold traditional sarees", "Red and orange color schemes", "Statement jewelry"]
   },
   2: {
@@ -84,7 +84,7 @@ export const numerologyProfiles = {
     gemstones: ["Citrine", "Yellow Sapphire", "Amber"],
     themes: ["Creativity", "Expression", "Joy"],
     personality: "Optimistic, creative, and sociable",
-    discount: 14,
+    discount: 13,
     productRecommendations: ["Bright colorful sarees", "Artistic designs", "Bold jewelry"]
   },
   4: {
@@ -98,7 +98,7 @@ export const numerologyProfiles = {
     gemstones: ["Sapphire", "Emerald", "Amethyst"],
     themes: ["Stability", "Organization", "Dedication"],
     personality: "Reliable, practical, and disciplined",
-    discount: 16,
+    discount: 14,
     productRecommendations: ["Classic silk sarees", "Traditional designs", "Elegant jewelry"]
   },
   5: {
@@ -112,7 +112,7 @@ export const numerologyProfiles = {
     gemstones: ["Aquamarine", "Turquoise", "Blue Topaz"],
     themes: ["Freedom", "Adventure", "Change"],
     personality: "Adventurous, versatile, and progressive",
-    discount: 18,
+    discount: 15,
     productRecommendations: ["Modern fusion sarees", "Bold patterns", "Contemporary jewelry"]
   },
   6: {
@@ -126,7 +126,7 @@ export const numerologyProfiles = {
     gemstones: ["Rose Quartz", "Pink Sapphire", "Rhodochrosite"],
     themes: ["Love", "Responsibility", "Harmony"],
     personality: "Caring, responsible, and nurturing",
-    discount: 20,
+    discount: 16,
     productRecommendations: ["Soft silk sarees", "Romantic designs", "Rose gold jewelry"]
   },
   7: {
@@ -140,7 +140,7 @@ export const numerologyProfiles = {
     gemstones: ["Amethyst", "Lapis Lazuli", "Clear Quartz"],
     themes: ["Spirituality", "Wisdom", "Analysis"],
     personality: "Spiritual, analytical, and introspective",
-    discount: 18,
+    discount: 17,
     productRecommendations: ["Mystical sarees", "Spiritual symbols", "Crystal jewelry"]
   },
   8: {
@@ -154,7 +154,7 @@ export const numerologyProfiles = {
     gemstones: ["Diamond", "Yellow Sapphire", "Tiger's Eye"],
     themes: ["Success", "Power", "Material Achievement"],
     personality: "Ambitious, powerful, and materialistic",
-    discount: 16,
+    discount: 18,
     productRecommendations: ["Luxury silk sarees", "Gold embroidery", "Precious jewelry"]
   },
   9: {
@@ -168,7 +168,7 @@ export const numerologyProfiles = {
     gemstones: ["Opal", "Pink Tourmaline", "Rose Quartz"],
     themes: ["Compassion", "Universal Love", "Completion"],
     personality: "Compassionate, idealistic, and humanitarian",
-    discount: 14,
+    discount: 19,
     productRecommendations: ["Artistic sarees", "Unique designs", "Charitable collections"]
   },
   11: {
@@ -182,7 +182,7 @@ export const numerologyProfiles = {
     gemstones: ["Lapis Lazuli", "Sodalite", "Azurite"],
     themes: ["Intuition", "Inspiration", "Spiritual Insight"],
     personality: "Intuitive, inspirational, and spiritually aware",
-    discount: 35,
+    discount: 22,
     productRecommendations: ["Mystical sarees", "Spiritual designs", "Healing jewelry"]
   },
   22: {
@@ -196,7 +196,7 @@ export const numerologyProfiles = {
     gemstones: ["Clear Quartz", "Diamond", "White Sapphire"],
     themes: ["Manifestation", "Vision", "Master Building"],
     personality: "Visionary, practical, and masterful",
-    discount: 40,
+    discount: 44,
     productRecommendations: ["Masterpiece sarees", "Exclusive designs", "Premium jewelry"]
   },
   33: {
@@ -210,7 +210,7 @@ export const numerologyProfiles = {
     gemstones: ["Diamond", "Clear Quartz", "White Pearl"],
     themes: ["Enlightenment", "Spiritual Service", "Master Teaching"],
     personality: "Enlightened, compassionate, and spiritually evolved",
-    discount: 50,
+    discount: 66,
     productRecommendations: ["Divine sarees", "Sacred designs", "Enlightened collections"]
   }
 };

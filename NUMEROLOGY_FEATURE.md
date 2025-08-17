@@ -16,18 +16,18 @@ The Numerology Life Path Calculator is a hidden feature implemented throughout t
 Each life path number (1-9, 11, 22, 33) has a unique profile:
 
 #### Life Path Numbers & Discounts:
-- **1 (The Pioneer)**: 5% discount
-- **2 (The Diplomat)**: 8% discount  
-- **3 (The Communicator)**: 12% discount
-- **4 (The Builder)**: 15% discount
-- **5 (The Adventurer)**: 18% discount
-- **6 (The Nurturer)**: 20% discount
-- **7 (The Seeker)**: 22% discount
-- **8 (The Achiever)**: 25% discount
-- **9 (The Humanitarian)**: 28% discount
-- **11 (Master Intuitive)**: 35% discount
-- **22 (Master Builder)**: 40% discount
-- **33 (Master Teacher)**: 50% discount
+- **1 (The Pioneer)**: 11% discount
+- **2 (The Diplomat)**: 12% discount  
+- **3 (The Communicator)**: 13% discount
+- **4 (The Builder)**: 14% discount
+- **5 (The Adventurer)**: 15% discount
+- **6 (The Nurturer)**: 16% discount
+- **7 (The Seeker)**: 17% discount
+- **8 (The Achiever)**: 18% discount
+- **9 (The Humanitarian)**: 19% discount
+- **11 (Master Intuitive)**: 22% discount
+- **22 (Master Builder)**: 44% discount
+- **33 (Master Teacher)**: 66% discount
 
 ### 3. Personalized Elements
 Each profile includes:
