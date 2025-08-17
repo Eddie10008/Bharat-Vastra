@@ -21,7 +21,9 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    required: function() {
+      return !this.googleId; // Password not required if using Google OAuth
+    },
     minlength: 6
   },
   phone: {
@@ -36,6 +38,25 @@ const userSchema = new mongoose.Schema({
   profileImage: {
     type: String,
     default: ''
+  },
+  // Google OAuth fields
+  googleId: {
+    type: String,
+    unique: true,
+    sparse: true
+  },
+  googleEmail: String,
+  googlePicture: String,
+  // Profile completion tracking
+  profileCompleted: {
+    type: Boolean,
+    default: false
+  },
+  profileCompletionPercentage: {
+    type: Number,
+    default: 0,
+    min: 0,
+    max: 100
   },
   addresses: [{
     type: {
@@ -72,12 +93,15 @@ const userSchema = new mongoose.Schema({
     size: String,
     color: String
   }],
-  // Seller/Wholesaler specific fields
+  // Enhanced Seller/Wholesaler specific fields
   businessName: String,
   businessType: {
     type: String,
-    enum: ['individual', 'partnership', 'corporation', 'llc']
+    enum: ['individual', 'partnership', 'corporation', 'llc', 'proprietorship']
   },
+  businessDescription: String,
+  businessWebsite: String,
+  businessLogo: String,
   gstNumber: String,
   panNumber: String,
   businessAddress: {
@@ -89,6 +113,42 @@ const userSchema = new mongoose.Schema({
   },
   businessPhone: String,
   businessEmail: String,
+  businessHours: {
+    monday: { open: String, close: String },
+    tuesday: { open: String, close: String },
+    wednesday: { open: String, close: String },
+    thursday: { open: String, close: String },
+    friday: { open: String, close: String },
+    saturday: { open: String, close: String },
+    sunday: { open: String, close: String }
+  },
+  // Special offers for sellers/wholesalers
+  specialOffers: {
+    isEligible: {
+      type: Boolean,
+      default: false
+    },
+    offersApplied: [{
+      offerId: String,
+      offerName: String,
+      discountPercentage: Number,
+      validUntil: Date,
+      appliedAt: {
+        type: Date,
+        default: Date.now
+      }
+    }],
+    commissionRate: {
+      type: Number,
+      default: 10, // Default 10% commission
+      min: 0,
+      max: 50
+    },
+    bulkDiscountEligible: {
+      type: Boolean,
+      default: true
+    }
+  },
   isVerified: {
     type: Boolean,
     default: false
@@ -100,6 +160,10 @@ const userSchema = new mongoose.Schema({
       type: String,
       enum: ['pending', 'approved', 'rejected'],
       default: 'pending'
+    },
+    uploadedAt: {
+      type: Date,
+      default: Date.now
     }
   }],
   // Customer specific fields
@@ -135,7 +199,29 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
-  lockUntil: Date
+  lockUntil: Date,
+  // Additional profile fields
+  bio: String,
+  socialLinks: {
+    facebook: String,
+    instagram: String,
+    twitter: String,
+    linkedin: String
+  },
+  notificationPreferences: {
+    email: {
+      type: Boolean,
+      default: true
+    },
+    sms: {
+      type: Boolean,
+      default: true
+    },
+    push: {
+      type: Boolean,
+      default: true
+    }
+  }
 }, {
   timestamps: true
 });
@@ -152,6 +238,46 @@ userSchema.pre('save', async function(next) {
     next(error);
   }
 });
+
+// Calculate profile completion percentage
+userSchema.methods.calculateProfileCompletion = function() {
+  let completed = 0;
+  let total = 0;
+
+  // Basic info (20%)
+  total += 20;
+  if (this.firstName && this.lastName) completed += 10;
+  if (this.email) completed += 5;
+  if (this.phone) completed += 5;
+
+  // Profile image (10%)
+  total += 10;
+  if (this.profileImage) completed += 10;
+
+  // Address (15%)
+  total += 15;
+  if (this.addresses && this.addresses.length > 0) completed += 15;
+
+  // Business profile for sellers/wholesalers (30%)
+  if (this.role === 'seller' || this.role === 'wholesaler') {
+    total += 30;
+    if (this.businessName) completed += 10;
+    if (this.businessType) completed += 5;
+    if (this.businessAddress && this.businessAddress.street) completed += 10;
+    if (this.businessPhone) completed += 5;
+  }
+
+  // Additional info (25%)
+  total += 25;
+  if (this.dateOfBirth) completed += 10;
+  if (this.gender) completed += 5;
+  if (this.bio) completed += 10;
+
+  this.profileCompletionPercentage = Math.round((completed / total) * 100);
+  this.profileCompleted = this.profileCompletionPercentage >= 80;
+  
+  return this.profileCompletionPercentage;
+};
 
 // Compare password method
 userSchema.methods.comparePassword = async function(candidatePassword) {

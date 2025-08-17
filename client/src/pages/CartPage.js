@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Trash2, Plus, Minus, ArrowRight, Heart, ShoppingBag } from 'lucide-react';
+import { Trash2, Plus, Minus, ArrowRight, Heart, ShoppingBag, Star } from 'lucide-react';
 import { AUSTRALIA_CONFIG, formatCurrency } from '../config/australia';
 import GaneshaLogo from '../components/common/GaneshaLogo';
 import DecorativePattern from '../components/common/DecorativePattern';

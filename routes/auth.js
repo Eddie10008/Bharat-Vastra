@@ -2,16 +2,60 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { body, validationResult } = require('express-validator');
+const { OAuth2Client } = require('google-auth-library');
 const User = require('../models/User');
 const { auth } = require('../middleware/auth');
 
 const router = express.Router();
+
+// Google OAuth client
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // Generate JWT Token
 const generateToken = (userId) => {
   return jwt.sign({ userId }, process.env.JWT_SECRET || 'bharat-vastra-secret', {
     expiresIn: '7d'
   });
+};
+
+// Special offers for sellers and wholesalers
+const getSpecialOffers = (role) => {
+  const offers = {
+    seller: [
+      {
+        id: 'SELLER_WELCOME',
+        name: 'Welcome Seller Offer',
+        description: 'Get 50% off on your first month commission',
+        discountPercentage: 50,
+        validDays: 30
+      },
+      {
+        id: 'BULK_DISCOUNT',
+        name: 'Bulk Order Discount',
+        description: 'Special rates for bulk orders',
+        discountPercentage: 15,
+        validDays: 90
+      }
+    ],
+    wholesaler: [
+      {
+        id: 'WHOLESALER_WELCOME',
+        name: 'Welcome Wholesaler Offer',
+        description: 'Get 60% off on your first month commission',
+        discountPercentage: 60,
+        validDays: 30
+      },
+      {
+        id: 'PREMIUM_WHOLESALER',
+        name: 'Premium Wholesaler Benefits',
+        description: 'Exclusive access to premium products',
+        discountPercentage: 25,
+        validDays: 180
+      }
+    ]
+  };
+  
+  return offers[role] || [];
 };
 
 // @route   POST /api/auth/register
@@ -21,7 +65,7 @@ router.post('/register', [
   body('firstName').trim().isLength({ min: 2 }).withMessage('First name must be at least 2 characters'),
   body('lastName').trim().isLength({ min: 2 }).withMessage('Last name must be at least 2 characters'),
   body('email').isEmail().normalizeEmail().withMessage('Please enter a valid email'),
-  body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
+  body('password').optional().isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
   body('phone').isMobilePhone().withMessage('Please enter a valid phone number'),
   body('role').optional().isIn(['customer', 'seller', 'wholesaler']).withMessage('Invalid role')
 ], async (req, res) => {
@@ -31,7 +75,21 @@ router.post('/register', [
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { firstName, lastName, email, password, phone, role, businessName, businessType } = req.body;
+    const { 
+      firstName, 
+      lastName, 
+      email, 
+      password, 
+      phone, 
+      role, 
+      businessName, 
+      businessType,
+      businessDescription,
+      businessWebsite,
+      businessPhone,
+      businessEmail,
+      businessAddress
+    } = req.body;
 
     // Check if user already exists
     let user = await User.findOne({ email });
@@ -53,8 +111,25 @@ router.post('/register', [
     if (role === 'seller' || role === 'wholesaler') {
       user.businessName = businessName;
       user.businessType = businessType;
+      user.businessDescription = businessDescription;
+      user.businessWebsite = businessWebsite;
+      user.businessPhone = businessPhone;
+      user.businessEmail = businessEmail;
+      user.businessAddress = businessAddress;
+      
+      // Apply special offers
+      user.specialOffers.isEligible = true;
+      const offers = getSpecialOffers(role);
+      user.specialOffers.offersApplied = offers.map(offer => ({
+        offerId: offer.id,
+        offerName: offer.name,
+        discountPercentage: offer.discountPercentage,
+        validUntil: new Date(Date.now() + offer.validDays * 24 * 60 * 60 * 1000)
+      }));
     }
 
+    // Calculate profile completion
+    user.calculateProfileCompletion();
     await user.save();
 
     // Generate token
@@ -69,13 +144,102 @@ router.post('/register', [
         lastName: user.lastName,
         email: user.email,
         role: user.role,
-        isVerified: user.isVerified
+        isVerified: user.isVerified,
+        businessName: user.businessName,
+        profileCompleted: user.profileCompleted,
+        profileCompletionPercentage: user.profileCompletionPercentage,
+        specialOffers: user.specialOffers
       }
     });
 
   } catch (error) {
     console.error('Registration error:', error);
     res.status(500).json({ message: 'Server error during registration' });
+  }
+});
+
+// @route   POST /api/auth/google
+// @desc    Google OAuth login/register
+// @access  Public
+router.post('/google', [
+  body('token').notEmpty().withMessage('Google token is required')
+], async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { token } = req.body;
+
+    // Verify Google token
+    const ticket = await googleClient.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID
+    });
+
+    const payload = ticket.getPayload();
+    const { sub: googleId, email, given_name, family_name, picture } = payload;
+
+    // Check if user exists
+    let user = await User.findOne({ 
+      $or: [{ email }, { googleId }] 
+    });
+
+    if (user) {
+      // Update Google info if not present
+      if (!user.googleId) {
+        user.googleId = googleId;
+        user.googleEmail = email;
+        user.googlePicture = picture;
+        await user.save();
+      }
+
+      // Update last login
+      user.lastLogin = new Date();
+      user.loginAttempts = 0;
+      user.lockUntil = undefined;
+      await user.save();
+    } else {
+      // Create new user
+      user = new User({
+        firstName: given_name,
+        lastName: family_name,
+        email,
+        googleId,
+        googleEmail: email,
+        googlePicture: picture,
+        phone: '', // Will be required to complete profile
+        role: 'customer',
+        emailVerified: true
+      });
+
+      user.calculateProfileCompletion();
+      await user.save();
+    }
+
+    // Generate token
+    const jwtToken = generateToken(user._id);
+
+    res.json({
+      message: 'Google authentication successful',
+      token: jwtToken,
+      user: {
+        id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        role: user.role,
+        isVerified: user.isVerified,
+        profileCompleted: user.profileCompleted,
+        profileCompletionPercentage: user.profileCompletionPercentage,
+        googlePicture: user.googlePicture
+      }
+    });
+
+  } catch (error) {
+    console.error('Google auth error:', error);
+    res.status(500).json({ message: 'Google authentication failed' });
   }
 });
 
@@ -141,7 +305,10 @@ router.post('/login', [
         email: user.email,
         role: user.role,
         isVerified: user.isVerified,
-        businessName: user.businessName
+        businessName: user.businessName,
+        profileCompleted: user.profileCompleted,
+        profileCompletionPercentage: user.profileCompletionPercentage,
+        specialOffers: user.specialOffers
       }
     });
 
@@ -160,9 +327,128 @@ router.get('/me', auth, async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
+    
+    // Calculate profile completion
+    user.calculateProfileCompletion();
+    await user.save();
+    
     res.json(user);
   } catch (error) {
     console.error('Get user error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// @route   PUT /api/auth/complete-profile
+// @desc    Complete user profile
+// @access  Private
+router.put('/complete-profile', auth, [
+  body('phone').isMobilePhone().withMessage('Please enter a valid phone number'),
+  body('addresses').isArray().withMessage('At least one address is required'),
+  body('role').optional().isIn(['customer', 'seller', 'wholesaler']).withMessage('Invalid role')
+], async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const {
+      phone,
+      addresses,
+      role,
+      businessName,
+      businessType,
+      businessDescription,
+      businessWebsite,
+      businessPhone,
+      businessEmail,
+      businessAddress,
+      dateOfBirth,
+      gender,
+      bio
+    } = req.body;
+
+    // Update basic info
+    user.phone = phone;
+    user.addresses = addresses;
+    user.dateOfBirth = dateOfBirth;
+    user.gender = gender;
+    user.bio = bio;
+
+    // Update role and business info if changing to seller/wholesaler
+    if (role && role !== user.role && (role === 'seller' || role === 'wholesaler')) {
+      user.role = role;
+      user.businessName = businessName;
+      user.businessType = businessType;
+      user.businessDescription = businessDescription;
+      user.businessWebsite = businessWebsite;
+      user.businessPhone = businessPhone;
+      user.businessEmail = businessEmail;
+      user.businessAddress = businessAddress;
+      
+      // Apply special offers for new sellers/wholesalers
+      user.specialOffers.isEligible = true;
+      const offers = getSpecialOffers(role);
+      user.specialOffers.offersApplied = offers.map(offer => ({
+        offerId: offer.id,
+        offerName: offer.name,
+        discountPercentage: offer.discountPercentage,
+        validUntil: new Date(Date.now() + offer.validDays * 24 * 60 * 60 * 1000)
+      }));
+    }
+
+    // Calculate profile completion
+    user.calculateProfileCompletion();
+    await user.save();
+
+    res.json({
+      message: 'Profile completed successfully',
+      user: {
+        id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        role: user.role,
+        profileCompleted: user.profileCompleted,
+        profileCompletionPercentage: user.profileCompletionPercentage,
+        specialOffers: user.specialOffers
+      }
+    });
+
+  } catch (error) {
+    console.error('Complete profile error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// @route   GET /api/auth/special-offers
+// @desc    Get special offers for user
+// @access  Private
+router.get('/special-offers', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const availableOffers = getSpecialOffers(user.role);
+    const appliedOffers = user.specialOffers.offersApplied;
+
+    res.json({
+      isEligible: user.specialOffers.isEligible,
+      availableOffers,
+      appliedOffers,
+      commissionRate: user.specialOffers.commissionRate
+    });
+
+  } catch (error) {
+    console.error('Get special offers error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });

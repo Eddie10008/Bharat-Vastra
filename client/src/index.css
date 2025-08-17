@@ -81,7 +81,7 @@
 
   /* Divine gradients with spiritual colors */
   .gradient-text {
-    @apply bg-gradient-to-r from-divine-purple-600 via-divine-gold-500 to-divine-orange-500 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-secondary-600 via-accent-500 to-divine-orange-500 bg-clip-text text-transparent;
   }
 
   .hero-gradient {
@@ -89,7 +89,7 @@
   }
 
   .divine-gradient {
-    @apply bg-gradient-to-br from-divine-purple-500 via-divine-gold-500 to-divine-orange-500;
+    @apply bg-gradient-to-br from-secondary-500 via-accent-500 to-divine-orange-500;
   }
 
   .spiritual-gradient {
@@ -105,7 +105,7 @@
   }
 
   .sacred-gradient {
-    @apply bg-gradient-to-br from-divine-gold-100 via-divine-yellow-50 to-divine-orange-50;
+    @apply bg-gradient-to-br from-accent-100 via-divine-yellow-50 to-divine-orange-50;
   }
 
   /* Divine geometric patterns with spiritual colors */
