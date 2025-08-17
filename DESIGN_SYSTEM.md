@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Bharat Vastra platform incorporates a unique design system inspired by the Ganesha logo, featuring geometric patterns, mandala-inspired elements, and traditional Indian design principles while maintaining a modern, clean aesthetic.
+The Bharat Vastra platform incorporates a unique design system inspired by the Ganesha logo, featuring spiritual colors, geometric patterns, mandala-inspired elements, and traditional Indian design principles while maintaining a modern, clean aesthetic. The design system celebrates spiritual heritage through carefully chosen colors that carry deep symbolic meaning.
 
 ## Logo Design
 
@@ -31,11 +31,20 @@ Four pattern variants inspired by the logo:
 - **Mandala**: Radial pattern with 8-point symmetry
 - **Minimal**: Simplified geometric elements
 
-### 2. Color Palette
-- **Primary**: Red (#dc2626) - Represents energy and prosperity
-- **Secondary**: Purple (#c026d3) - Spiritual and royal connotations
-- **Accent**: Gold (#d97706) - Traditional Indian gold
-- **Neutral**: Gray scale for text and backgrounds
+### 2. Spiritual Color Palette
+- **Red** (#dc2626) - Passion, energy, vitality, protection, sacrifice
+- **Purple** (#9333ea) - Royalty, dignity, spirituality, wisdom, divine connection
+- **Gold** (#f59e0b) - Wealth, spiritual enlightenment, divine glory, prosperity
+- **Orange** (#f97316) - Energy, happiness, vitality, spirituality, asceticism
+- **Yellow** (#eab308) - Happiness, hope, intellect, divine light, wisdom
+- **Green** (#22c55e) - Nature, life, growth, new beginnings, prosperity
+- **Blue** (#3b82f6) - Calmness, peace, responsibility, divine protection
+- **Indigo** (#6366f1) - Intuition, wisdom, spiritual insight, deep knowledge
+- **Teal** (#14b8a6) - Communication, healing, emotional balance, harmony
+- **Magenta** (#ec4899) - Universal love, compassion, spiritual awakening
+- **Brown** (#bfa094) - Earth, stability, grounding, connection to nature
+- **White** (#ffffff) - Purity, innocence, peace, new beginnings, divine light
+- **Black** (#000000) - Protection, uncrossing, warding off negative energy, mystery
 
 ### 3. Typography
 - **Serif**: Playfair Display for headings and brand elements
@@ -51,14 +60,16 @@ Four pattern variants inspired by the logo:
 - Diagonal lines adding dynamic movement
 
 ### Border Treatments
-- `ganesha-border` class for subtle geometric borders
+- `ganesha-border` class for subtle geometric borders with spiritual color accents
 - Corner decorations inspired by traditional Indian architecture
-- Layered borders with varying opacity levels
+- Layered borders with varying opacity levels using spiritual color combinations
 
 ### Background Patterns
-- `ganesha-pattern` for subtle geometric backgrounds
+- `ganesha-pattern` for subtle geometric backgrounds with spiritual color gradients
+- `chakra-pattern` for chakra-inspired spiritual energy patterns
 - `mandala-bg` for spiritual and ceremonial sections
-- Radial gradients mimicking the logo's circular elements
+- `divine-pattern` for divine light and spiritual awakening themes
+- Radial gradients mimicking the logo's circular elements with spiritual color harmony
 
 ## Component Integration
 
@@ -86,9 +97,14 @@ Four pattern variants inspired by the logo:
 
 ### CSS Classes
 ```css
-.ganesha-pattern          /* Geometric background pattern */
-.ganesha-border          /* Subtle geometric border */
+.ganesha-pattern          /* Geometric background pattern with spiritual colors */
+.ganesha-border          /* Subtle geometric border with spiritual accents */
+.chakra-pattern          /* Chakra-inspired spiritual energy patterns */
 .mandala-bg              /* Mandala-inspired background */
+.divine-pattern          /* Divine light and spiritual awakening themes */
+.spiritual-gradient      /* Spiritual color gradient combinations */
+.earth-gradient          /* Earth and nature-inspired gradients */
+.divine-gradient         /* Divine and enlightenment gradients */
 ```
 
 ### Component Props
@@ -152,4 +168,4 @@ client/src/
 └── tailwind.config.js      # Color and font configuration
 ```
 
-This design system ensures consistent branding across the Bharat Vastra platform while celebrating Indian cultural heritage through modern design principles.
+This design system ensures consistent branding across the Bharat Vastra platform while celebrating Indian spiritual heritage through carefully chosen colors and modern design principles. Each color carries deep symbolic meaning, creating a profound connection between the platform and its spiritual roots.

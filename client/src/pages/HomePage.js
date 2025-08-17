@@ -36,36 +36,36 @@ const HomePage = () => {
   const features = [
     {
       icon: '🪔',
-      title: 'Authentic Indian Heritage',
-      description: 'Curated collection of genuine Indian attire and jewelry'
+      title: 'Spiritual Heritage',
+      description: 'Curated collection of genuine Indian attire and jewelry with spiritual significance'
     },
     {
       icon: '🚚',
-      title: 'Free Shipping',
+      title: 'Divine Delivery',
       description: `Free shipping on orders above ${formatCurrency(AUSTRALIA_CONFIG.shipping.freeThreshold)} across Australia`
     },
     {
       icon: '🔒',
-      title: 'Secure Payments',
+      title: 'Sacred Security',
       description: 'Multiple secure payment options including Afterpay, PayPal and cards'
     },
     {
       icon: '✨',
-      title: 'Premium Quality',
-      description: 'Handpicked premium materials and craftsmanship'
+      title: 'Blessed Quality',
+      description: 'Handpicked premium materials and divine craftsmanship'
     }
   ];
 
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative hero-gradient overflow-hidden">
-        <div className="absolute inset-0 ganesha-pattern"></div>
-        <div className="absolute top-10 left-10 opacity-5">
-          <DecorativePattern variant="mandala" size="xl" opacity={0.3} />
+      <section className="relative divine-gradient overflow-hidden">
+        <div className="absolute inset-0 chakra-pattern"></div>
+        <div className="absolute top-10 left-10 opacity-10">
+          <DecorativePattern variant="mandala" size="xl" opacity={0.4} />
         </div>
-        <div className="absolute bottom-10 right-10 opacity-5">
-          <DecorativePattern variant="mandala" size="xl" opacity={0.3} />
+        <div className="absolute bottom-10 right-10 opacity-10">
+          <DecorativePattern variant="mandala" size="xl" opacity={0.4} />
         </div>
         <div className="relative container-max px-4 py-20 lg:py-32">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -75,11 +75,11 @@ const HomePage = () => {
               </div>
               <h1 className="text-4xl lg:text-6xl font-serif font-bold text-gray-900 mb-6">
                 Discover the Essence of{' '}
-                <span className="gradient-text">Indian Fashion</span>
+                <span className="gradient-text">Spiritual Fashion</span>
               </h1>
-              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+              <p className="text-xl text-gray-700 mb-8 leading-relaxed">
                 From traditional sarees to contemporary fusion wear, explore our curated collection 
-                of premium Indian attire and jewelry that celebrates our rich cultural heritage.
+                of premium Indian attire and jewelry that celebrates our rich spiritual heritage and cultural traditions.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Link
@@ -105,11 +105,11 @@ const HomePage = () => {
                   className="rounded-2xl shadow-2xl"
                 />
               </div>
-              <div className="absolute -top-4 -right-4 w-32 h-32 bg-accent-200 rounded-full animate-float">
-                <DecorativePattern variant="minimal" size="full" opacity={0.2} />
+              <div className="absolute -top-4 -right-4 w-32 h-32 bg-spiritual-orange-200 rounded-full animate-float">
+                <DecorativePattern variant="minimal" size="full" opacity={0.3} />
               </div>
-              <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-primary-200 rounded-full animate-float-delayed">
-                <DecorativePattern variant="minimal" size="full" opacity={0.2} />
+              <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-spiritual-purple-200 rounded-full animate-float-delayed">
+                <DecorativePattern variant="minimal" size="full" opacity={0.3} />
               </div>
             </div>
           </div>
@@ -117,24 +117,24 @@ const HomePage = () => {
       </section>
 
       {/* Features Section */}
-      <section className="section-padding bg-white">
+      <section className="section-padding earth-gradient">
         <div className="container-max">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-serif font-bold text-gray-900 mb-4">
               Why Choose Bharat Vastra?
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We bring you the finest Indian fashion with premium quality, authentic designs, and exceptional service.
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+              We bring you the finest Indian fashion with spiritual significance, divine craftsmanship, and exceptional service.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
               <div key={index} className="text-center group">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary-100 to-accent-100 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                <div className="w-16 h-16 bg-gradient-to-br from-spiritual-orange-100 to-spiritual-yellow-100 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 ganesha-border">
                   {feature.icon}
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
+                <p className="text-gray-700">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -244,24 +244,24 @@ const HomePage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding bg-gradient-to-r from-primary-600 to-secondary-600 text-white">
+      <section className="section-padding spiritual-gradient text-white">
         <div className="container-max text-center">
           <h2 className="text-3xl lg:text-4xl font-serif font-bold mb-6">
-            Ready to Experience Premium Indian Fashion?
+            Ready to Experience Divine Fashion?
           </h2>
           <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-            Join thousands of customers who trust Bharat Vastra for authentic Indian attire and jewelry.
+            Join thousands of customers who trust Bharat Vastra for spiritual and authentic Indian attire and jewelry.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/register"
-              className="bg-white text-primary-600 hover:bg-gray-100 font-semibold py-4 px-8 rounded-lg transition-colors text-lg"
+              className="bg-spiritual-gold-500 hover:bg-spiritual-gold-600 text-white font-semibold py-4 px-8 rounded-lg transition-colors text-lg"
             >
               Start Shopping
             </Link>
             <Link
               to="/about"
-              className="border-2 border-white text-white hover:bg-white hover:text-primary-600 font-semibold py-4 px-8 rounded-lg transition-colors text-lg"
+              className="border-2 border-white text-white hover:bg-white hover:text-spiritual-purple-600 font-semibold py-4 px-8 rounded-lg transition-colors text-lg"
             >
               Learn More
             </Link>

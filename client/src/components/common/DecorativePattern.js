@@ -118,7 +118,7 @@ const DecorativePattern = ({
   };
 
   return (
-    <div className={`${sizeClasses[size]} text-gray-400 ${className}`}>
+    <div className={`${sizeClasses[size]} text-spiritual-purple-400 ${className}`}>
       {patterns[variant]}
     </div>
   );

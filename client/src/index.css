@@ -85,7 +85,7 @@
   }
 
   .spiritual-gradient {
-    @apply bg-gradient-to-br from-spiritual-indigo-500 via-spiritual-purple-500 to-spiritual-magenta-500;
+    @apply bg-gradient-to-br from-spiritual-indigo-500 via-spiritual-magenta-500 to-spiritual-orange-500;
   }
 
   .earth-gradient {
@@ -93,7 +93,7 @@
   }
 
   .divine-gradient {
-    @apply bg-gradient-to-br from-spiritual-gold-100 via-spiritual-yellow-50 to-spiritual-orange-50;
+    @apply bg-gradient-to-br from-spiritual-yellow-100 via-spiritual-orange-50 to-spiritual-teal-50;
   }
 
   .section-padding {
