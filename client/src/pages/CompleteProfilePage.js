@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useAuth } from '../contexts/AuthContext';
 import { Upload, MapPin, Building, User, Calendar, MessageSquare, Globe, Phone, Mail, Sparkles } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { calculateLifePathNumber, getNumerologyProfile } from '../utils/numerologyCalculator';
+
 
 const CompleteProfilePage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,8 +19,6 @@ const CompleteProfilePage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    setValue,
     watch
   } = useForm();
 

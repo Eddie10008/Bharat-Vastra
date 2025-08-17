@@ -5,22 +5,15 @@ import { AUSTRALIA_CONFIG, formatCurrency } from '../config/australia';
 import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
 import GaneshaLogo from '../components/common/GaneshaLogo';
-import DecorativePattern from '../components/common/DecorativePattern';
 
 const CartPage = () => {
   const { 
     items: cartItems, 
-    total, 
-    itemCount, 
     numerologyDiscount, 
     numerologyDiscountAmount,
     updateQuantity, 
     removeFromCart, 
-    clearCart,
-    getShippingCost,
-    getTotalWithShipping,
-    getTax,
-    getFinalTotal
+    getShippingCost
   } = useCart();
   
   const { user } = useAuth();
@@ -72,6 +65,9 @@ const CartPage = () => {
       couponDiscount = appliedCoupon.discount;
     }
   }
+
+  // Calculate total
+  const total = subtotal - couponDiscount + getShippingCost();
 
   const recommendedProducts = [
     {

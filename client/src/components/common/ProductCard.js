@@ -9,7 +9,7 @@ import { calculateDiscount } from '../../utils/numerologyCalculator';
 import DecorativePattern from './DecorativePattern';
 
 const ProductCard = ({ product, viewMode = 'grid' }) => {
-  const { addToCart, isInCart } = useCart();
+  const { addToCart } = useCart();
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   const { user } = useAuth();
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../contexts/AuthContext';
-import { Eye, EyeOff, Mail, Lock, User, Phone, Building, Gift, CheckCircle, AlertCircle } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, User, Phone, Building, CheckCircle, AlertCircle, Shirt, Crown, Sparkles } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const RegisterPage = () => {
@@ -55,34 +55,40 @@ const RegisterPage = () => {
       {
         title: 'Welcome Seller Offer',
         description: 'Get 50% off on your first month commission',
-        icon: '🎁'
+        icon: '🎁',
+        indianContext: 'Perfect for traditional wear sellers'
       },
       {
         title: 'Bulk Order Discount',
         description: 'Special rates for bulk orders',
-        icon: '📦'
+        icon: '📦',
+        indianContext: 'Ideal for wedding season orders'
       },
       {
         title: 'Premium Support',
         description: 'Dedicated account manager',
-        icon: '👨‍💼'
+        icon: '👨‍💼',
+        indianContext: 'Expert guidance for Indian fashion'
       }
     ],
     wholesaler: [
       {
         title: 'Welcome Wholesaler Offer',
         description: 'Get 60% off on your first month commission',
-        icon: '🎁'
+        icon: '🎁',
+        indianContext: 'Exclusive rates for bulk Indian attire'
       },
       {
         title: 'Premium Wholesaler Benefits',
         description: 'Exclusive access to premium products',
-        icon: '⭐'
+        icon: '⭐',
+        indianContext: 'Access to designer collections'
       },
       {
         title: 'Priority Support',
         description: '24/7 dedicated support line',
-        icon: '📞'
+        icon: '📞',
+        indianContext: 'Support in Hindi and English'
       }
     ]
   };
@@ -92,15 +98,32 @@ const RegisterPage = () => {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="mx-auto h-16 w-16 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center mb-4">
-            <span className="text-2xl text-white font-bold">BV</span>
+          <div className="mx-auto h-20 w-20 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center mb-4 relative">
+            <Shirt className="text-2xl text-white" />
+            <div className="absolute -top-1 -right-1 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center">
+              <Sparkles className="w-3 h-3 text-orange-600" />
+            </div>
           </div>
           <h1 className="text-4xl font-serif font-bold text-gray-900 mb-2">
             Join Bharat Vastra
           </h1>
           <p className="text-gray-600 text-lg">
-            Create your account and start your journey with us
+            Discover the finest Indian attire and jewelry collection
           </p>
+          <div className="mt-4 flex justify-center space-x-4 text-sm text-gray-500">
+            <span className="flex items-center">
+              <CheckCircle className="w-4 h-4 mr-1 text-green-500" />
+              Authentic Indian Fashion
+            </span>
+            <span className="flex items-center">
+              <CheckCircle className="w-4 h-4 mr-1 text-green-500" />
+              Free Shipping on $150+
+            </span>
+            <span className="flex items-center">
+              <CheckCircle className="w-4 h-4 mr-1 text-green-500" />
+              Secure Payments
+            </span>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -230,7 +253,7 @@ const RegisterPage = () => {
                         {...register('phone', {
                           required: 'Phone number is required',
                           pattern: {
-                            value: /^[\+]?[1-9][\d]{0,15}$/,
+                            value: /^[+]?[1-9][\d]{0,15}$/,
                             message: 'Please enter a valid phone number'
                           }
                         })}
@@ -349,7 +372,7 @@ const RegisterPage = () => {
                 <>
                   <div className="text-center mb-6">
                     <h2 className="text-2xl font-bold text-gray-900 mb-2">Choose Your Role</h2>
-                    <p className="text-gray-600">Select how you want to use Bharat Vastra</p>
+                    <p className="text-gray-600">Select how you want to experience Bharat Vastra</p>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -372,16 +395,17 @@ const RegisterPage = () => {
                       />
                       <div className="text-center">
                         <div className="mx-auto h-12 w-12 bg-blue-100 rounded-full flex items-center justify-center mb-3">
-                          <User className="h-6 w-6 text-blue-600" />
+                          <Shirt className="h-6 w-6 text-blue-600" />
                         </div>
                         <h3 className="text-lg font-semibold text-gray-900 mb-2">Customer</h3>
                         <p className="text-sm text-gray-600 mb-4">
-                          Shop for beautiful sarees and traditional wear
+                          Shop for beautiful Indian attire and jewelry
                         </p>
                         <ul className="text-xs text-gray-500 space-y-1">
-                          <li>• Browse and purchase products</li>
-                          <li>• Track orders and wishlist</li>
+                          <li>• Browse sarees, lehengas, kurtas</li>
+                          <li>• Shop traditional jewelry</li>
                           <li>• Get personalized recommendations</li>
+                          <li>• Track orders and wishlist</li>
                         </ul>
                       </div>
                     </div>
@@ -409,12 +433,13 @@ const RegisterPage = () => {
                         </div>
                         <h3 className="text-lg font-semibold text-gray-900 mb-2">Seller</h3>
                         <p className="text-sm text-gray-600 mb-4">
-                          Sell your products to customers worldwide
+                          Sell your Indian fashion products worldwide
                         </p>
                         <ul className="text-xs text-gray-500 space-y-1">
-                          <li>• List and manage products</li>
-                          <li>• Track sales and analytics</li>
+                          <li>• List traditional wear & jewelry</li>
+                          <li>• Reach global customers</li>
                           <li>• Special commission rates</li>
+                          <li>• Track sales and analytics</li>
                         </ul>
                       </div>
                     </div>
@@ -438,7 +463,7 @@ const RegisterPage = () => {
                       />
                       <div className="text-center">
                         <div className="mx-auto h-12 w-12 bg-purple-100 rounded-full flex items-center justify-center mb-3">
-                          <Gift className="h-6 w-6 text-purple-600" />
+                          <Crown className="h-6 w-6 text-purple-600" />
                         </div>
                         <h3 className="text-lg font-semibold text-gray-900 mb-2">Wholesaler</h3>
                         <p className="text-sm text-gray-600 mb-4">
@@ -448,6 +473,7 @@ const RegisterPage = () => {
                           <li>• Bulk order management</li>
                           <li>• Premium product access</li>
                           <li>• Exclusive wholesale rates</li>
+                          <li>• Priority support</li>
                         </ul>
                       </div>
                     </div>
@@ -548,6 +574,7 @@ const RegisterPage = () => {
                       <div>
                         <h3 className="font-semibold text-gray-900">{offer.title}</h3>
                         <p className="text-sm text-gray-600">{offer.description}</p>
+                        <p className="text-xs text-orange-600 mt-1 italic">{offer.indianContext}</p>
                       </div>
                     </div>
                   </div>
@@ -557,10 +584,64 @@ const RegisterPage = () => {
               <div className="mt-6 p-4 bg-gradient-to-r from-orange-500 to-red-600 rounded-lg text-white">
                 <h3 className="font-semibold mb-2">Why choose Bharat Vastra?</h3>
                 <ul className="text-sm space-y-1">
+                  <li>• Authentic Indian fashion marketplace</li>
+                  <li>• Global reach for your products</li>
                   <li>• Secure payment processing</li>
                   <li>• 24/7 customer support</li>
                   <li>• Fast shipping worldwide</li>
-                  <li>• Quality assurance guarantee</li>
+                </ul>
+              </div>
+            </div>
+          )}
+
+          {/* Indian Fashion Features */}
+          {selectedRole === 'customer' && (
+            <div className="bg-white rounded-2xl shadow-xl p-8">
+              <div className="text-center mb-6">
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">Discover Indian Fashion</h2>
+                <p className="text-gray-600">Experience the beauty of traditional Indian attire</p>
+              </div>
+
+              <div className="space-y-4">
+                <div className="p-4 border border-orange-200 rounded-lg bg-orange-50">
+                  <div className="flex items-start space-x-3">
+                                            <Shirt className="w-6 h-6 text-orange-600 mt-1" />
+                    <div>
+                      <h3 className="font-semibold text-gray-900">Traditional Sarees</h3>
+                      <p className="text-sm text-gray-600">Elegant silk, cotton, and designer sarees</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-4 border border-purple-200 rounded-lg bg-purple-50">
+                  <div className="flex items-start space-x-3">
+                    <Crown className="w-6 h-6 text-purple-600 mt-1" />
+                    <div>
+                      <h3 className="font-semibold text-gray-900">Bridal Lehengas</h3>
+                      <p className="text-sm text-gray-600">Stunning bridal wear for special occasions</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-4 border border-green-200 rounded-lg bg-green-50">
+                  <div className="flex items-start space-x-3">
+                    <Sparkles className="w-6 h-6 text-green-600 mt-1" />
+                    <div>
+                      <h3 className="font-semibold text-gray-900">Traditional Jewelry</h3>
+                      <p className="text-sm text-gray-600">Authentic Indian jewelry and accessories</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 p-4 bg-gradient-to-r from-orange-500 to-red-600 rounded-lg text-white">
+                <h3 className="font-semibold mb-2">Customer Benefits</h3>
+                <ul className="text-sm space-y-1">
+                  <li>• Free shipping on orders above $150</li>
+                  <li>• Authentic Indian fashion</li>
+                  <li>• Secure payment options</li>
+                  <li>• Easy returns and exchanges</li>
+                  <li>• Expert customer support</li>
                 </ul>
               </div>
             </div>

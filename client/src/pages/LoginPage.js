@@ -9,7 +9,6 @@ import GoogleLogin from '../components/auth/GoogleLogin';
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [googleLoading, setGoogleLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { login, error, clearError } = useAuth();
@@ -44,12 +43,10 @@ const LoginPage = () => {
   };
 
   const handleGoogleSuccess = (result) => {
-    setGoogleLoading(false);
     navigate(from, { replace: true });
   };
 
   const handleGoogleError = (error) => {
-    setGoogleLoading(false);
     console.error('Google login error:', error);
   };
 

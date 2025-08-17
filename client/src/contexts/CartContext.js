@@ -15,10 +15,6 @@ const initialState = {
 
 const cartReducer = (state, action) => {
   let newItems;
-  let newTotal;
-  let newItemCount;
-  let numerologyDiscount = 0;
-  let numerologyDiscountAmount = 0;
 
   // Helper function to calculate totals with numerology discount
   const calculateTotalsWithDiscount = (items, userNumerology) => {
@@ -63,14 +59,15 @@ const cartReducer = (state, action) => {
         newItems = [...state.items, action.payload];
       }
 
-      newTotal = newItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      newItemCount = newItems.reduce((sum, item) => sum + item.quantity, 0);
+      const addTotals = calculateTotalsWithDiscount(newItems, action.userNumerology);
 
       return {
         ...state,
         items: newItems,
-        total: newTotal,
-        itemCount: newItemCount
+        total: addTotals.total,
+        itemCount: addTotals.itemCount,
+        numerologyDiscount: addTotals.numerologyDiscount,
+        numerologyDiscountAmount: addTotals.numerologyDiscountAmount
       };
 
     case 'UPDATE_QUANTITY':
