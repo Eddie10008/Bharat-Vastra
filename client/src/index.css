@@ -12,6 +12,8 @@
     font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: #ffffff;
+    color: #000000;
   }
 
   * {
@@ -20,80 +22,128 @@
 }
 
 @layer components {
+  /* Monochromatic Design System - Black & White */
   .btn-primary {
-    @apply bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+    @apply bg-black hover:bg-gray-800 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 transform hover:scale-105;
   }
 
   .btn-secondary {
-    @apply bg-secondary-600 hover:bg-secondary-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2;
+    @apply bg-white border-2 border-black text-black hover:bg-black hover:text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 transform hover:scale-105;
   }
 
   .btn-outline {
-    @apply border-2 border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+    @apply border-2 border-black text-black hover:bg-black hover:text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 transform hover:scale-105;
   }
 
   .btn-ghost {
-    @apply text-gray-600 hover:text-gray-900 hover:bg-gray-100 font-medium py-2 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2;
+    @apply text-gray-600 hover:text-black hover:bg-gray-100 font-medium py-3 px-6 rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2;
   }
 
   .input-field {
-    @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors duration-200;
+    @apply w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all duration-300 bg-white;
   }
 
   .card {
-    @apply bg-white rounded-xl shadow-soft border border-gray-100 overflow-hidden;
+    @apply bg-white rounded-xl shadow-soft border border-gray-200 overflow-hidden;
   }
 
   .card-hover {
-    @apply card hover:shadow-medium transition-shadow duration-300;
+    @apply card hover:shadow-medium transition-all duration-300 transform hover:scale-105;
   }
 
   .badge {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
   }
 
   .badge-primary {
-    @apply badge bg-primary-100 text-primary-800;
+    @apply badge bg-black text-white;
   }
 
   .badge-secondary {
-    @apply badge bg-secondary-100 text-secondary-800;
+    @apply badge bg-gray-100 text-black border border-gray-300;
   }
 
   .badge-accent {
-    @apply badge bg-accent-100 text-accent-800;
+    @apply badge bg-gray-200 text-black;
   }
 
   .badge-success {
-    @apply badge bg-green-100 text-green-800;
+    @apply badge bg-green-100 text-green-800 border border-green-300;
   }
 
   .badge-warning {
-    @apply badge bg-yellow-100 text-yellow-800;
+    @apply badge bg-yellow-100 text-yellow-800 border border-yellow-300;
   }
 
   .badge-error {
-    @apply badge bg-red-100 text-red-800;
+    @apply badge bg-red-100 text-red-800 border border-red-300;
   }
 
+  /* Monochromatic gradients */
   .gradient-text {
-    @apply bg-gradient-to-r from-primary-600 via-spiritual-orange-500 to-secondary-600 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-black via-gray-700 to-black bg-clip-text text-transparent;
   }
 
   .hero-gradient {
-    @apply bg-gradient-to-br from-spiritual-orange-50 via-white to-spiritual-yellow-50;
+    @apply bg-gradient-to-br from-gray-50 via-white to-gray-100;
   }
 
   .spiritual-gradient {
-    @apply bg-gradient-to-br from-spiritual-indigo-500 via-spiritual-magenta-500 to-spiritual-orange-500;
+    @apply bg-gradient-to-br from-gray-900 via-black to-gray-800;
   }
 
   .earth-gradient {
-    @apply bg-gradient-to-br from-spiritual-brown-100 via-spiritual-green-50 to-spiritual-teal-50;
+    @apply bg-gradient-to-br from-gray-100 via-white to-gray-50;
   }
 
   .divine-gradient {
-    @apply bg-gradient-to-br from-spiritual-yellow-100 via-spiritual-orange-50 to-spiritual-teal-50;
+    @apply bg-gradient-to-br from-white via-gray-50 to-gray-100;
+  }
+
+  /* Geometric patterns inspired by the logo */
+  .ganesha-pattern {
+    background-image: 
+      radial-gradient(circle at 25% 25%, rgba(0,0,0,0.1) 1px, transparent 1px),
+      radial-gradient(circle at 75% 75%, rgba(0,0,0,0.1) 1px, transparent 1px),
+      linear-gradient(45deg, transparent 40%, rgba(0,0,0,0.05) 50%, transparent 60%);
+    background-size: 60px 60px, 60px 60px, 120px 120px;
+  }
+
+  .chakra-pattern {
+    background-image: 
+      radial-gradient(circle at center, rgba(0,0,0,0.1) 1px, transparent 1px),
+      radial-gradient(circle at center, transparent 20px, rgba(0,0,0,0.05) 21px, transparent 22px);
+    background-size: 40px 40px, 80px 80px;
+  }
+
+  .mandala-bg {
+    background-image: 
+      conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(0,0,0,0.05) 45deg, transparent 90deg, rgba(0,0,0,0.05) 135deg, transparent 180deg, rgba(0,0,0,0.05) 225deg, transparent 270deg, rgba(0,0,0,0.05) 315deg, transparent 360deg);
+    background-size: 100px 100px;
+  }
+
+  .divine-pattern {
+    background-image: 
+      linear-gradient(90deg, transparent 40%, rgba(0,0,0,0.03) 50%, transparent 60%),
+      linear-gradient(0deg, transparent 40%, rgba(0,0,0,0.03) 50%, transparent 60%);
+    background-size: 80px 80px;
+  }
+
+  /* Geometric borders */
+  .ganesha-border {
+    position: relative;
+  }
+
+  .ganesha-border::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, transparent 40%, rgba(0,0,0,0.1) 50%, transparent 60%);
+    border-radius: inherit;
+    z-index: -1;
   }
 
   .section-padding {
@@ -106,6 +156,28 @@
 
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* Logo-inspired decorative elements */
+  .cosmic-dots {
+    background-image: 
+      radial-gradient(circle at 20% 20%, rgba(0,0,0,0.1) 1px, transparent 1px),
+      radial-gradient(circle at 80% 80%, rgba(0,0,0,0.1) 1px, transparent 1px),
+      radial-gradient(circle at 50% 50%, rgba(0,0,0,0.05) 1px, transparent 1px);
+    background-size: 60px 60px, 60px 60px, 120px 120px;
+  }
+
+  .geometric-grid {
+    background-image: 
+      linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .spiritual-border {
+    border: 2px solid transparent;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(45deg, black, gray, black) border-box;
   }
 }
 

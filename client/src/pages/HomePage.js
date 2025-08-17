@@ -57,23 +57,23 @@ const HomePage = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-gray-50 via-white to-gray-100 overflow-hidden">
-        <div className="absolute inset-0 chakra-pattern"></div>
-        <div className="absolute top-10 left-10 opacity-5">
+        <div className="absolute inset-0 ganesha-pattern opacity-30"></div>
+        <div className="absolute top-10 left-10 opacity-10">
           <DecorativePattern variant="mandala" size="xl" opacity={0.3} />
         </div>
-        <div className="absolute bottom-10 right-10 opacity-5">
+        <div className="absolute bottom-10 right-10 opacity-10">
           <DecorativePattern variant="mandala" size="xl" opacity={0.3} />
         </div>
         <div className="relative container-max px-4 py-20 lg:py-32">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
-              <div className="flex justify-center lg:justify-start mb-6">
-                <GaneshaLogo size="xl" showText={false} />
+              <div className="flex justify-center lg:justify-start mb-8">
+                <GaneshaLogo size="2xl" showText={true} />
               </div>
-              <h1 className="text-4xl lg:text-6xl font-serif font-bold text-gray-900 mb-6">
+              <h1 className="text-4xl lg:text-6xl font-serif font-bold text-black mb-6">
                 Discover the Essence of{' '}
                 <span className="gradient-text">Spiritual Fashion</span>
               </h1>
@@ -98,17 +98,17 @@ const HomePage = () => {
               </div>
             </div>
             <div className="relative">
-              <div className="relative z-10 ganesha-border rounded-2xl overflow-hidden">
+              <div className="relative z-10 spiritual-border rounded-2xl overflow-hidden">
                 <img
                   src="https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                   alt="Indian Fashion"
                   className="rounded-2xl shadow-2xl"
                 />
               </div>
-              <div className="absolute -top-4 -right-4 w-32 h-32 bg-gray-200 rounded-full animate-float">
+              <div className="absolute -top-4 -right-4 w-32 h-32 bg-gray-200 rounded-full animate-float cosmic-dots">
                 <DecorativePattern variant="minimal" size="full" opacity={0.2} />
               </div>
-              <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-gray-300 rounded-full animate-float-delayed">
+              <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-gray-300 rounded-full animate-float-delayed geometric-grid">
                 <DecorativePattern variant="minimal" size="full" opacity={0.2} />
               </div>
             </div>
@@ -117,10 +117,10 @@ const HomePage = () => {
       </section>
 
       {/* Features Section */}
-      <section className="section-padding bg-gray-50">
+      <section className="section-padding bg-white">
         <div className="container-max">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-serif font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl lg:text-4xl font-serif font-bold text-black mb-4">
               Why Choose Bharat Vastra?
             </h2>
             <p className="text-xl text-gray-700 max-w-3xl mx-auto">
@@ -130,10 +130,10 @@ const HomePage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
               <div key={index} className="text-center group">
-                <div className="w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 ganesha-border">
+                <div className="w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 spiritual-border">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
+                <h3 className="text-xl font-semibold text-black mb-2">{feature.title}</h3>
                 <p className="text-gray-700">{feature.description}</p>
               </div>
             ))}
@@ -145,7 +145,7 @@ const HomePage = () => {
       <section className="section-padding bg-gray-50">
         <div className="container-max">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-serif font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl lg:text-4xl font-serif font-bold text-black mb-4">
               Shop by Category
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -159,7 +159,7 @@ const HomePage = () => {
                 to={category.path}
                 className="group block"
               >
-                <div className="relative overflow-hidden rounded-xl shadow-soft group-hover:shadow-medium transition-shadow duration-300">
+                <div className="relative overflow-hidden rounded-xl shadow-soft group-hover:shadow-medium transition-all duration-300 spiritual-border">
                   <img
                     src={category.image}
                     alt={category.name}
@@ -181,7 +181,7 @@ const HomePage = () => {
       <section className="section-padding bg-white">
         <div className="container-max">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-serif font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl lg:text-4xl font-serif font-bold text-black mb-4">
               Featured Products
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -211,7 +211,7 @@ const HomePage = () => {
                   </div>
                 </div>
                 <div className="p-4">
-                  <h3 className="font-semibold text-gray-900 mb-2">Elegant Silk Saree</h3>
+                  <h3 className="font-semibold text-black mb-2">Elegant Silk Saree</h3>
                   <div className="flex items-center mb-2">
                     <div className="flex items-center">
                       {[1, 2, 3, 4, 5].map((star) => (
@@ -222,7 +222,7 @@ const HomePage = () => {
                   </div>
                   <div className="flex items-center justify-between">
                     <div>
-                      <span className="text-lg font-bold text-gray-900">{formatCurrency(299)}</span>
+                      <span className="text-lg font-bold text-black">{formatCurrency(299)}</span>
                       <span className="text-sm text-gray-500 line-through ml-2">{formatCurrency(399)}</span>
                     </div>
                     <span className="text-sm text-green-600 font-medium">25% OFF</span>
@@ -244,7 +244,7 @@ const HomePage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding bg-gradient-to-r from-gray-800 to-gray-900 text-white">
+      <section className="section-padding spiritual-gradient text-white">
         <div className="container-max text-center">
           <h2 className="text-3xl lg:text-4xl font-serif font-bold mb-6">
             Ready to Experience Divine Fashion?
@@ -255,13 +255,13 @@ const HomePage = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/register"
-              className="bg-white text-gray-900 hover:bg-gray-100 font-semibold py-4 px-8 rounded-lg transition-colors text-lg"
+              className="bg-white text-black hover:bg-gray-100 font-semibold py-4 px-8 rounded-lg transition-colors text-lg"
             >
               Start Shopping
             </Link>
             <Link
               to="/about"
-              className="border-2 border-white text-white hover:bg-white hover:text-gray-900 font-semibold py-4 px-8 rounded-lg transition-colors text-lg"
+              className="border-2 border-white text-white hover:bg-white hover:text-black font-semibold py-4 px-8 rounded-lg transition-colors text-lg"
             >
               Learn More
             </Link>
