@@ -6,9 +6,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Spiritual Color Palette
+        // Divine Color Palette - Inspired by Spiritual Meanings
         primary: {
-          // Red - Passion, energy, vitality, protection
+          // Red - Passion, energy, vitality, protection, sacrifice
           50: '#fef2f2',
           100: '#fee2e2',
           200: '#fecaca',
@@ -46,7 +46,7 @@ module.exports = {
           800: '#92400e',
           900: '#78350f',
         },
-        spiritual: {
+        divine: {
           // Orange - Energy, happiness, vitality, spirituality, asceticism
           orange: {
             50: '#fff7ed',
@@ -150,6 +150,19 @@ module.exports = {
             700: '#977669',
             800: '#846358',
             900: '#43302b',
+          },
+          // Silver - Redemption, clarity, moon's energy
+          silver: {
+            50: '#f8fafc',
+            100: '#f1f5f9',
+            200: '#e2e8f0',
+            300: '#cbd5e1',
+            400: '#94a3b8',
+            500: '#64748b',
+            600: '#475569',
+            700: '#334155',
+            800: '#1e293b',
+            900: '#0f172a',
           },
           // White - Purity, innocence, peace, new beginnings, divine light
           white: '#ffffff',

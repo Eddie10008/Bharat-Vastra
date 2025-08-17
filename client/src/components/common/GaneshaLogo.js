@@ -1,6 +1,6 @@
 import React from 'react';
 
-const GaneshaLogo = ({ className = '', size = 'md', showText = true }) => {
+const GaneshaLogo = ({ className = '', size = 'md', showText = true, variant = 'monochrome' }) => {
   const sizeClasses = {
     sm: 'w-8 h-8',
     md: 'w-12 h-12',
@@ -220,8 +220,20 @@ const GaneshaLogo = ({ className = '', size = 'md', showText = true }) => {
       
       {showText && (
         <div className="flex flex-col">
-          <h1 className="text-2xl font-serif font-bold text-gray-900">BHARAT VASTRA</h1>
-          <p className="text-xs text-gray-500 -mt-1">Premium Indian Fashion</p>
+          <h1 className={`text-2xl font-serif font-bold ${
+            variant === 'divine' ? 'bg-gradient-to-r from-divine-purple-600 via-divine-gold-500 to-divine-orange-500 bg-clip-text text-transparent' : 
+            variant === 'spiritual' ? 'bg-gradient-to-r from-divine-indigo-600 via-divine-magenta-500 to-divine-teal-500 bg-clip-text text-transparent' :
+            'text-gray-900'
+          }`}>
+            BHARAT VASTRA
+          </h1>
+          <p className={`text-xs -mt-1 ${
+            variant === 'divine' ? 'text-divine-purple-600' :
+            variant === 'spiritual' ? 'text-divine-indigo-600' :
+            'text-gray-500'
+          }`}>
+            Premium Indian Fashion
+          </p>
         </div>
       )}
     </div>

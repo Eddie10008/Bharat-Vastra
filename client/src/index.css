@@ -79,53 +79,61 @@
     @apply badge bg-red-100 text-red-800 border border-red-300;
   }
 
-  /* Monochromatic gradients */
+  /* Divine gradients with spiritual colors */
   .gradient-text {
-    @apply bg-gradient-to-r from-black via-gray-700 to-black bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-divine-purple-600 via-divine-gold-500 to-divine-orange-500 bg-clip-text text-transparent;
   }
 
   .hero-gradient {
-    @apply bg-gradient-to-br from-gray-50 via-white to-gray-100;
-  }
-
-  .spiritual-gradient {
-    @apply bg-gradient-to-br from-gray-900 via-black to-gray-800;
-  }
-
-  .earth-gradient {
-    @apply bg-gradient-to-br from-gray-100 via-white to-gray-50;
+    @apply bg-gradient-to-br from-divine-orange-50 via-white to-divine-yellow-50;
   }
 
   .divine-gradient {
-    @apply bg-gradient-to-br from-white via-gray-50 to-gray-100;
+    @apply bg-gradient-to-br from-divine-purple-500 via-divine-gold-500 to-divine-orange-500;
   }
 
-  /* Geometric patterns inspired by the logo */
+  .spiritual-gradient {
+    @apply bg-gradient-to-br from-divine-indigo-500 via-divine-magenta-500 to-divine-teal-500;
+  }
+
+  .earth-gradient {
+    @apply bg-gradient-to-br from-divine-brown-100 via-divine-green-50 to-divine-teal-50;
+  }
+
+  .cosmic-gradient {
+    @apply bg-gradient-to-br from-divine-silver-100 via-divine-blue-50 to-divine-indigo-50;
+  }
+
+  .sacred-gradient {
+    @apply bg-gradient-to-br from-divine-gold-100 via-divine-yellow-50 to-divine-orange-50;
+  }
+
+  /* Divine geometric patterns with spiritual colors */
   .ganesha-pattern {
     background-image: 
-      radial-gradient(circle at 25% 25%, rgba(0,0,0,0.1) 1px, transparent 1px),
-      radial-gradient(circle at 75% 75%, rgba(0,0,0,0.1) 1px, transparent 1px),
-      linear-gradient(45deg, transparent 40%, rgba(0,0,0,0.05) 50%, transparent 60%);
+      radial-gradient(circle at 25% 25%, rgba(147, 51, 234, 0.1) 1px, transparent 1px),
+      radial-gradient(circle at 75% 75%, rgba(245, 158, 11, 0.1) 1px, transparent 1px),
+      linear-gradient(45deg, transparent 40%, rgba(220, 38, 38, 0.05) 50%, transparent 60%);
     background-size: 60px 60px, 60px 60px, 120px 120px;
   }
 
   .chakra-pattern {
     background-image: 
-      radial-gradient(circle at center, rgba(0,0,0,0.1) 1px, transparent 1px),
-      radial-gradient(circle at center, transparent 20px, rgba(0,0,0,0.05) 21px, transparent 22px);
+      radial-gradient(circle at center, rgba(34, 197, 94, 0.1) 1px, transparent 1px),
+      radial-gradient(circle at center, transparent 20px, rgba(59, 130, 246, 0.05) 21px, transparent 22px);
     background-size: 40px 40px, 80px 80px;
   }
 
   .mandala-bg {
     background-image: 
-      conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(0,0,0,0.05) 45deg, transparent 90deg, rgba(0,0,0,0.05) 135deg, transparent 180deg, rgba(0,0,0,0.05) 225deg, transparent 270deg, rgba(0,0,0,0.05) 315deg, transparent 360deg);
+      conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(147, 51, 234, 0.05) 45deg, transparent 90deg, rgba(245, 158, 11, 0.05) 135deg, transparent 180deg, rgba(34, 197, 94, 0.05) 225deg, transparent 270deg, rgba(59, 130, 246, 0.05) 315deg, transparent 360deg);
     background-size: 100px 100px;
   }
 
   .divine-pattern {
     background-image: 
-      linear-gradient(90deg, transparent 40%, rgba(0,0,0,0.03) 50%, transparent 60%),
-      linear-gradient(0deg, transparent 40%, rgba(0,0,0,0.03) 50%, transparent 60%);
+      linear-gradient(90deg, transparent 40%, rgba(236, 72, 153, 0.03) 50%, transparent 60%),
+      linear-gradient(0deg, transparent 40%, rgba(20, 184, 166, 0.03) 50%, transparent 60%);
     background-size: 80px 80px;
   }
 
