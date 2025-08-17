@@ -61,21 +61,21 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
 
             {/* Sale badge */}
             {originalPrice && finalPrice < originalPrice && (
-              <div className="absolute top-2 left-1/2 transform -translate-x-1/2 bg-red-600 text-white text-xs font-medium px-2 py-1 rounded-full">
+              <div className="absolute top-2 left-1/2 transform -translate-x-1/2 bg-divine-red-500 text-white text-xs font-medium px-2 py-1 rounded-full">
                 SALE
               </div>
             )}
 
             {/* New badge */}
             {product.isNew && (
-              <div className="absolute bottom-2 left-2 bg-green-600 text-white text-xs font-medium px-2 py-1 rounded-full">
+              <div className="absolute bottom-2 left-2 bg-divine-green-500 text-white text-xs font-medium px-2 py-1 rounded-full">
                 NEW
               </div>
             )}
 
             {/* Wholesale badge */}
             {product.isWholesale && (
-              <div className="absolute bottom-2 right-2 bg-blue-600 text-white text-xs font-medium px-2 py-1 rounded-full">
+              <div className="absolute bottom-2 right-2 bg-divine-blue-500 text-white text-xs font-medium px-2 py-1 rounded-full">
                 WHOLESALE
               </div>
             )}

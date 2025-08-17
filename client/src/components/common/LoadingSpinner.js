@@ -12,22 +12,22 @@ const LoadingSpinner = ({ size = 'md', text = 'Loading...' }) => {
     <div className="flex flex-col items-center justify-center space-y-4">
       <div className={`${sizeClasses[size]} relative`}>
         {/* Outer rotating circle */}
-        <div className="absolute inset-0 border-2 border-gray-200 border-t-gray-600 rounded-full animate-spin"></div>
+        <div className="absolute inset-0 border-2 border-divine-purple-200 border-t-divine-gold-500 rounded-full animate-spin"></div>
         
         {/* Inner geometric pattern */}
         <div className="absolute inset-2 flex items-center justify-center">
           <svg className="w-full h-full" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
             {/* Concentric circles */}
-            <circle cx="50" cy="50" r="35" stroke="currentColor" strokeWidth="1" fill="none" className="text-gray-300"/>
-            <circle cx="50" cy="50" r="25" stroke="currentColor" strokeWidth="1" fill="none" className="text-gray-400"/>
-            <circle cx="50" cy="50" r="15" stroke="currentColor" strokeWidth="1" fill="none" className="text-gray-500"/>
+            <circle cx="50" cy="50" r="35" stroke="currentColor" strokeWidth="1" fill="none" className="text-divine-red-300"/>
+            <circle cx="50" cy="50" r="25" stroke="currentColor" strokeWidth="1" fill="none" className="text-divine-orange-400"/>
+            <circle cx="50" cy="50" r="15" stroke="currentColor" strokeWidth="1" fill="none" className="text-divine-yellow-500"/>
             
             {/* Central dot */}
-            <circle cx="50" cy="50" r="3" fill="currentColor" className="text-gray-700"/>
+            <circle cx="50" cy="50" r="3" fill="currentColor" className="text-divine-purple-600"/>
             
             {/* Connecting lines */}
-            <line x1="15" y1="50" x2="85" y2="50" stroke="currentColor" strokeWidth="0.5" className="text-gray-200"/>
-            <line x1="50" y1="15" x2="50" y2="85" stroke="currentColor" strokeWidth="0.5" className="text-gray-200"/>
+            <line x1="15" y1="50" x2="85" y2="50" stroke="currentColor" strokeWidth="0.5" className="text-divine-green-200"/>
+            <line x1="50" y1="15" x2="50" y2="85" stroke="currentColor" strokeWidth="0.5" className="text-divine-blue-200"/>
           </svg>
         </div>
       </div>
