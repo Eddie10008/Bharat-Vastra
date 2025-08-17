@@ -40,14 +40,14 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-black text-white">
       {/* Main footer content */}
       <div className="container-max px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Brand section */}
           <div className="lg:col-span-2">
             <div className="mb-4">
-              <GaneshaLogo size="lg" />
+              <GaneshaLogo size="lg" showText={true} />
             </div>
             <p className="text-gray-300 mb-6 leading-relaxed">
               Discover the finest collection of Indian attire and jewelry. From traditional sarees 
@@ -58,15 +58,15 @@ const Footer = () => {
             {/* Contact info */}
             <div className="space-y-3">
               <div className="flex items-center space-x-3 text-gray-300">
-                <Phone size={16} className="text-primary-400" />
+                <Phone size={16} className="text-white" />
                 <span>{AUSTRALIA_CONFIG.contact.phone}</span>
               </div>
               <div className="flex items-center space-x-3 text-gray-300">
-                <Mail size={16} className="text-primary-400" />
+                <Mail size={16} className="text-white" />
                 <span>{AUSTRALIA_CONFIG.contact.email}</span>
               </div>
               <div className="flex items-start space-x-3 text-gray-300">
-                <MapPin size={16} className="text-primary-400 mt-1" />
+                <MapPin size={16} className="text-white mt-1" />
                 <span>
                   {AUSTRALIA_CONFIG.contact.address.street}<br />
                   {AUSTRALIA_CONFIG.contact.address.suburb}, {AUSTRALIA_CONFIG.contact.address.city}<br />
@@ -85,7 +85,7 @@ const Footer = () => {
                   <li key={link.name}>
                     <Link
                       to={link.path}
-                      className="text-gray-300 hover:text-primary-400 transition-colors text-sm"
+                      className="text-gray-300 hover:text-white transition-colors text-sm"
                     >
                       {link.name}
                     </Link>
@@ -106,13 +106,13 @@ const Footer = () => {
             <p className="text-gray-300 text-sm mb-4">
               Subscribe to our newsletter for the latest collections and exclusive offers.
             </p>
-            <div className="flex ganesha-border rounded-lg overflow-hidden">
+            <div className="flex spiritual-border rounded-lg overflow-hidden">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-2 bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-white placeholder-gray-400"
+                className="flex-1 px-4 py-2 bg-gray-900 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-white focus:border-white text-white placeholder-gray-400"
               />
-              <button className="px-6 py-2 bg-primary-600 hover:bg-primary-700 text-white font-medium transition-colors">
+              <button className="px-6 py-2 bg-white text-black hover:bg-gray-100 font-medium transition-colors">
                 Subscribe
               </button>
             </div>
@@ -138,7 +138,7 @@ const Footer = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-primary-400 transition-colors"
+                  className="text-gray-400 hover:text-white transition-colors"
                   aria-label={social.label}
                 >
                   <social.icon size={20} />
@@ -150,13 +150,13 @@ const Footer = () => {
             <div className="flex items-center space-x-2">
               <span className="text-gray-400 text-sm">We accept:</span>
               <div className="flex items-center space-x-1">
-                <div className="w-8 h-5 bg-gray-700 rounded text-xs flex items-center justify-center text-gray-300">
+                <div className="w-8 h-5 bg-gray-800 rounded text-xs flex items-center justify-center text-gray-300">
                   💳
                 </div>
-                <div className="w-8 h-5 bg-gray-700 rounded text-xs flex items-center justify-center text-gray-300">
+                <div className="w-8 h-5 bg-gray-800 rounded text-xs flex items-center justify-center text-gray-300">
                   📱
                 </div>
-                <div className="w-8 h-5 bg-gray-700 rounded text-xs flex items-center justify-center text-gray-300">
+                <div className="w-8 h-5 bg-gray-800 rounded text-xs flex items-center justify-center text-gray-300">
                   🏦
                 </div>
               </div>
@@ -170,19 +170,19 @@ const Footer = () => {
         <div className="container-max px-4">
           <div className="flex flex-wrap justify-center items-center space-x-8 text-gray-400 text-sm">
             <div className="flex items-center space-x-2">
-              <div className="w-4 h-4 bg-green-500 rounded-full"></div>
+              <div className="w-4 h-4 bg-white rounded-full"></div>
               <span>100% Authentic Products</span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
+              <div className="w-4 h-4 bg-white rounded-full"></div>
               <span>Secure Payment</span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-4 h-4 bg-yellow-500 rounded-full"></div>
+              <div className="w-4 h-4 bg-white rounded-full"></div>
               <span>Free Shipping on $150+</span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-4 h-4 bg-purple-500 rounded-full"></div>
+              <div className="w-4 h-4 bg-white rounded-full"></div>
               <span>Easy Returns</span>
             </div>
           </div>
