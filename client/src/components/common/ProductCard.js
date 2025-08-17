@@ -1,14 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, ShoppingCart, Star } from 'lucide-react';
+import { Heart, ShoppingCart, Star, Sparkles } from 'lucide-react';
 import { useCart } from '../../contexts/CartContext';
 import { useWishlist } from '../../contexts/WishlistContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { formatCurrency } from '../../config/australia';
+import { calculateDiscount } from '../../utils/numerologyCalculator';
 import DecorativePattern from './DecorativePattern';
 
 const ProductCard = ({ product, viewMode = 'grid' }) => {
   const { addToCart, isInCart } = useCart();
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+  const { user } = useAuth();
 
   const handleAddToCart = (e) => {
     e.preventDefault();
@@ -26,6 +29,11 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
 
   const finalPrice = product.price;
   const originalPrice = product.originalPrice;
+  
+  // Calculate numerology discount
+  const numerologyDiscount = user?.numerology?.lifePathNumber 
+    ? calculateDiscount(user.numerology.lifePathNumber, finalPrice)
+    : null;
 
   if (viewMode === 'list') {
     return (

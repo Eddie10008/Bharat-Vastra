@@ -172,6 +172,35 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ['male', 'female', 'other']
   },
+  // Numerology fields
+  numerology: {
+    lifePathNumber: {
+      type: Number,
+      min: 1,
+      max: 33
+    },
+    calculatedAt: {
+      type: Date,
+      default: Date.now
+    },
+    profile: {
+      name: String,
+      description: String,
+      personality: String,
+      discount: {
+        type: Number,
+        default: 0
+      }
+    },
+    colors: {
+      primary: String,
+      secondary: String,
+      accent: String
+    },
+    gemstones: [String],
+    themes: [String],
+    productRecommendations: [String]
+  },
   preferences: {
     categories: [String],
     sizes: [String],

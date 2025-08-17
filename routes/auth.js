@@ -7,6 +7,7 @@ const User = require('../models/User');
 const { auth } = require('../middleware/auth');
 const upload = require('../middleware/upload'); // Added for file upload
 const cloudinary = require('../utils/cloudinary'); // Added for cloudinary
+const { calculateLifePathNumber, getNumerologyProfile } = require('../utils/numerologyCalculator');
 
 const router = express.Router();
 
@@ -589,6 +590,78 @@ router.post('/logout', auth, (req, res) => {
   // In a real application, you might want to blacklist the token
   // For now, we'll just return a success message
   res.json({ message: 'Logged out successfully' });
+});
+
+// Calculate numerology profile
+router.post('/calculate-numerology', auth, async (req, res) => {
+  try {
+    const { dateOfBirth } = req.body;
+    
+    if (!dateOfBirth) {
+      return res.status(400).json({ message: 'Date of birth is required' });
+    }
+
+    const lifePathNumber = calculateLifePathNumber(dateOfBirth);
+    if (!lifePathNumber) {
+      return res.status(400).json({ message: 'Invalid date of birth' });
+    }
+
+    const numerologyProfile = getNumerologyProfile(lifePathNumber);
+    if (!numerologyProfile) {
+      return res.status(400).json({ message: 'Unable to calculate numerology profile' });
+    }
+
+    // Update user with numerology information
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user.id,
+      {
+        dateOfBirth: new Date(dateOfBirth),
+        numerology: {
+          lifePathNumber,
+          calculatedAt: new Date(),
+          profile: {
+            name: numerologyProfile.name,
+            description: numerologyProfile.description,
+            personality: numerologyProfile.personality,
+            discount: numerologyProfile.discount
+          },
+          colors: numerologyProfile.colors,
+          gemstones: numerologyProfile.gemstones,
+          themes: numerologyProfile.themes,
+          productRecommendations: numerologyProfile.productRecommendations
+        }
+      },
+      { new: true }
+    );
+
+    res.json({
+      success: true,
+      numerology: updatedUser.numerology,
+      message: 'Numerology profile calculated successfully'
+    });
+  } catch (error) {
+    console.error('Calculate numerology error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Get numerology profile
+router.get('/numerology-profile', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    
+    if (!user.numerology || !user.numerology.lifePathNumber) {
+      return res.status(404).json({ message: 'Numerology profile not found' });
+    }
+
+    res.json({
+      success: true,
+      numerology: user.numerology
+    });
+  } catch (error) {
+    console.error('Get numerology profile error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
 });
 
 module.exports = router;

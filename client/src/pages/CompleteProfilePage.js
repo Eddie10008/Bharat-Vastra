@@ -2,16 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../contexts/AuthContext';
-import { Upload, MapPin, Building, User, Calendar, MessageSquare, Globe, Phone, Mail } from 'lucide-react';
+import { Upload, MapPin, Building, User, Calendar, MessageSquare, Globe, Phone, Mail, Sparkles } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { calculateLifePathNumber, getNumerologyProfile } from '../utils/numerologyCalculator';
 
 const CompleteProfilePage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
   const [imagePreview, setImagePreview] = useState('');
   const [addresses, setAddresses] = useState([{ type: 'home', street: '', city: '', state: '', zipCode: '', country: 'Australia', isDefault: true }]);
+  const [numerologyInfo, setNumerologyInfo] = useState(null);
+  const [showNumerology, setShowNumerology] = useState(false);
   const navigate = useNavigate();
-  const { user, updateProfile } = useAuth();
+  const { user, updateProfile, calculateNumerology } = useAuth();
 
   const {
     register,
@@ -69,6 +72,24 @@ const CompleteProfilePage = () => {
     }
     
     setAddresses(newAddresses);
+  };
+
+  const handleDateOfBirthChange = async (dateOfBirth) => {
+    if (dateOfBirth) {
+      try {
+        const result = await calculateNumerology(dateOfBirth);
+        if (result && result.success) {
+          setNumerologyInfo(result.numerology);
+          setShowNumerology(true);
+          toast.success(`Your Life Path Number is ${result.numerology.lifePathNumber}!`);
+        }
+      } catch (error) {
+        console.error('Numerology calculation error:', error);
+      }
+    } else {
+      setNumerologyInfo(null);
+      setShowNumerology(false);
+    }
   };
 
   const onSubmit = async (data) => {
@@ -170,10 +191,45 @@ const CompleteProfilePage = () => {
                       id="dateOfBirth"
                       type="date"
                       {...register('dateOfBirth')}
+                      onChange={(e) => handleDateOfBirthChange(e.target.value)}
                       className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                     />
                   </div>
                 </div>
+
+                {/* Numerology Display */}
+                {showNumerology && numerologyInfo && (
+                  <div className="md:col-span-2 mb-6 p-4 rounded-lg border-2 border-dashed"
+                       style={{ borderColor: numerologyInfo.colors?.primary || '#FF6B35' }}>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg"
+                             style={{ backgroundColor: numerologyInfo.colors?.primary || '#FF6B35' }}>
+                          {numerologyInfo.lifePathNumber}
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-gray-900">{numerologyInfo.profile?.name}</h3>
+                          <p className="text-sm text-gray-600">Life Path Number {numerologyInfo.lifePathNumber}</p>
+                        </div>
+                      </div>
+                      {[11, 22, 33].includes(numerologyInfo.lifePathNumber) && (
+                        <div className="flex items-center text-purple-600">
+                          <Sparkles className="w-4 h-4 mr-1" />
+                          <span className="text-sm font-semibold">Master Number</span>
+                        </div>
+                      )}
+                    </div>
+                    <p className="text-sm text-gray-700 mb-3">{numerologyInfo.profile?.description}</p>
+                    <div className="flex items-center justify-between">
+                      <div className="text-sm text-gray-600">
+                        <strong>Your Discount:</strong> {numerologyInfo.profile?.discount}% OFF
+                      </div>
+                      <div className="text-sm text-gray-600">
+                        <strong>Personality:</strong> {numerologyInfo.profile?.personality}
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 <div>
                   <label htmlFor="gender" className="block text-sm font-medium text-gray-700 mb-2">

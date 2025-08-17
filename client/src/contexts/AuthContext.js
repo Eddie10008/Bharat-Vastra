@@ -214,6 +214,28 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Calculate numerology profile
+  const calculateNumerology = async (dateOfBirth) => {
+    try {
+      const response = await axios.post('/api/auth/calculate-numerology', { dateOfBirth });
+      return response.data;
+    } catch (error) {
+      console.error('Calculate numerology error:', error);
+      return null;
+    }
+  };
+
+  // Get numerology profile
+  const getNumerologyProfile = async () => {
+    try {
+      const response = await axios.get('/api/auth/numerology-profile');
+      return response.data;
+    } catch (error) {
+      console.error('Get numerology profile error:', error);
+      return null;
+    }
+  };
+
   // Change password
   const changePassword = async (passwordData) => {
     try {
@@ -270,6 +292,8 @@ export const AuthProvider = ({ children }) => {
     logout,
     updateProfile,
     getSpecialOffers,
+    calculateNumerology,
+    getNumerologyProfile,
     changePassword,
     forgotPassword,
     resetPassword,
