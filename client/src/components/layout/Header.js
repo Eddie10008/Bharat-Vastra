@@ -42,7 +42,7 @@ const Header = () => {
             <div className="flex items-center space-x-4">
               <span>🪔 Premium Indian Attire & Jewelry</span>
               <span>|</span>
-              <span>Free Shipping on Orders Above ₹999</span>
+              <span>Free Shipping on Orders Above $150</span>
             </div>
             <div className="hidden md:flex items-center space-x-4">
               <a href="tel:+91-XXXXXXXXXX" className="hover:text-accent-300 transition-colors">
