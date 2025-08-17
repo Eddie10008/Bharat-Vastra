@@ -1,64 +1,34 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Trash2, Plus, Minus, ArrowRight, Heart, ShoppingBag, Star } from 'lucide-react';
+import { Trash2, Plus, Minus, ArrowRight, Heart, ShoppingBag, Star, Sparkles } from 'lucide-react';
 import { AUSTRALIA_CONFIG, formatCurrency } from '../config/australia';
+import { useCart } from '../contexts/CartContext';
+import { useAuth } from '../contexts/AuthContext';
 import GaneshaLogo from '../components/common/GaneshaLogo';
 import DecorativePattern from '../components/common/DecorativePattern';
 
 const CartPage = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: 'Elegant Silk Saree with Zari Work',
-      price: 299,
-      originalPrice: 399,
-      image: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-      color: 'Red',
-      size: 'Free Size',
-      quantity: 1,
-      stock: 15
-    },
-    {
-      id: 2,
-      name: 'Traditional Kundan Necklace Set',
-      price: 199,
-      originalPrice: 249,
-      image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-      color: 'Gold',
-      size: 'Adjustable',
-      quantity: 2,
-      stock: 8
-    },
-    {
-      id: 3,
-      name: 'Cotton Kurta with Embroidery',
-      price: 89,
-      originalPrice: 119,
-      image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-      color: 'Blue',
-      size: 'M',
-      quantity: 1,
-      stock: 12
-    }
-  ]);
-
+  const { 
+    items: cartItems, 
+    total, 
+    itemCount, 
+    numerologyDiscount, 
+    numerologyDiscountAmount,
+    updateQuantity, 
+    removeFromCart, 
+    clearCart,
+    getShippingCost,
+    getTotalWithShipping,
+    getTax,
+    getFinalTotal
+  } = useCart();
+  
+  const { user } = useAuth();
   const [couponCode, setCouponCode] = useState('');
   const [appliedCoupon, setAppliedCoupon] = useState(null);
 
-  const updateQuantity = (itemId, newQuantity) => {
-    if (newQuantity < 1) return;
-    
-    setCartItems(prevItems =>
-      prevItems.map(item =>
-        item.id === itemId
-          ? { ...item, quantity: Math.min(newQuantity, item.stock) }
-          : item
-      )
-    );
-  };
-
   const removeItem = (itemId) => {
-    setCartItems(prevItems => prevItems.filter(item => item.id !== itemId));
+    removeFromCart(itemId);
   };
 
   const moveToWishlist = (itemId) => {
@@ -91,8 +61,8 @@ const CartPage = () => {
     setCouponCode('');
   };
 
+  // Calculate subtotal for display purposes
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const totalDiscount = cartItems.reduce((sum, item) => sum + ((item.originalPrice - item.price) * item.quantity), 0);
   
   let couponDiscount = 0;
   if (appliedCoupon) {
@@ -102,9 +72,6 @@ const CartPage = () => {
       couponDiscount = appliedCoupon.discount;
     }
   }
-
-  const shipping = subtotal >= AUSTRALIA_CONFIG.shipping.freeThreshold ? 0 : AUSTRALIA_CONFIG.shipping.standard;
-  const total = subtotal - couponDiscount + shipping;
 
   const recommendedProducts = [
     {
@@ -367,12 +334,18 @@ const CartPage = () => {
                   <span className="text-gray-600">Subtotal</span>
                   <span className="font-medium">{formatCurrency(subtotal)}</span>
                 </div>
-                {totalDiscount > 0 && (
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Product Discount</span>
-                    <span className="text-green-600 font-medium">-{formatCurrency(totalDiscount)}</span>
+                
+                {/* Numerology Discount */}
+                {numerologyDiscount > 0 && (
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center space-x-2">
+                      <Sparkles className="w-4 h-4 text-purple-500" />
+                      <span className="text-gray-600">Numerology Discount</span>
+                    </div>
+                    <span className="text-purple-600 font-medium">-{formatCurrency(numerologyDiscountAmount)}</span>
                   </div>
                 )}
+                
                 {couponDiscount > 0 && (
                   <div className="flex justify-between">
                     <span className="text-gray-600">Coupon Discount</span>
@@ -382,7 +355,7 @@ const CartPage = () => {
                 <div className="flex justify-between">
                   <span className="text-gray-600">Shipping</span>
                   <span className="font-medium">
-                    {shipping === 0 ? 'Free' : formatCurrency(shipping)}
+                    {getShippingCost() === 0 ? 'Free' : formatCurrency(getShippingCost())}
                   </span>
                 </div>
                 <div className="border-t border-gray-200 pt-3">
@@ -410,13 +383,30 @@ const CartPage = () => {
                 Continue Shopping
               </Link>
 
+              {/* Numerology Info */}
+              {user?.numerology?.lifePathNumber && (
+                <div className="mt-6 p-4 rounded-lg border-2 border-dashed"
+                     style={{ borderColor: user.numerology.colors?.primary || '#FF6B35' }}>
+                  <div className="flex items-center space-x-2 mb-2">
+                    <Sparkles className="w-4 h-4 text-purple-500" />
+                    <h3 className="text-sm font-medium text-gray-900">Your Numerology Discount</h3>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-2">
+                    Life Path Number {user.numerology.lifePathNumber} - {user.numerology.profile?.name}
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    You're receiving a {numerologyDiscount}% discount based on your life path number!
+                  </p>
+                </div>
+              )}
+
               {/* Shipping Info */}
               <div className="mt-6 p-4 bg-gray-50 rounded-lg">
                 <h3 className="text-sm font-medium text-gray-900 mb-2">Shipping Information</h3>
                 <p className="text-sm text-gray-600">
                   Free shipping on orders above {formatCurrency(AUSTRALIA_CONFIG.shipping.freeThreshold)}
                 </p>
-                {shipping > 0 && (
+                {getShippingCost() > 0 && (
                   <p className="text-sm text-gray-600 mt-1">
                     Add {formatCurrency(AUSTRALIA_CONFIG.shipping.freeThreshold - subtotal)} more for free shipping
                   </p>

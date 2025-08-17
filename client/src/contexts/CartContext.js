@@ -1,19 +1,47 @@
-import React, { createContext, useContext, useReducer, useEffect } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { AUSTRALIA_CONFIG } from '../config/australia';
+import { calculateDiscount } from '../utils/numerologyCalculator';
 
 const CartContext = createContext();
 
 const initialState = {
   items: JSON.parse(localStorage.getItem('cart')) || [],
   total: 0,
-  itemCount: 0
+  itemCount: 0,
+  numerologyDiscount: 0,
+  numerologyDiscountAmount: 0
 };
 
 const cartReducer = (state, action) => {
   let newItems;
   let newTotal;
   let newItemCount;
+  let numerologyDiscount = 0;
+  let numerologyDiscountAmount = 0;
+
+  // Helper function to calculate totals with numerology discount
+  const calculateTotalsWithDiscount = (items, userNumerology) => {
+    const subtotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
+    
+    if (userNumerology?.lifePathNumber) {
+      const discount = calculateDiscount(userNumerology.lifePathNumber, subtotal);
+      return {
+        total: subtotal - discount.amount,
+        itemCount,
+        numerologyDiscount: discount.percentage,
+        numerologyDiscountAmount: discount.amount
+      };
+    }
+    
+    return {
+      total: subtotal,
+      itemCount,
+      numerologyDiscount: 0,
+      numerologyDiscountAmount: 0
+    };
+  };
 
   switch (action.type) {
     case 'ADD_ITEM':
@@ -52,26 +80,28 @@ const cartReducer = (state, action) => {
           : item
       );
 
-      newTotal = newItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      newItemCount = newItems.reduce((sum, item) => sum + item.quantity, 0);
+      const updateTotals = calculateTotalsWithDiscount(newItems, action.userNumerology);
 
       return {
         ...state,
         items: newItems,
-        total: newTotal,
-        itemCount: newItemCount
+        total: updateTotals.total,
+        itemCount: updateTotals.itemCount,
+        numerologyDiscount: updateTotals.numerologyDiscount,
+        numerologyDiscountAmount: updateTotals.numerologyDiscountAmount
       };
 
     case 'REMOVE_ITEM':
       newItems = state.items.filter(item => item.id !== action.payload);
-      newTotal = newItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      newItemCount = newItems.reduce((sum, item) => sum + item.quantity, 0);
+      const removeTotals = calculateTotalsWithDiscount(newItems, action.userNumerology);
 
       return {
         ...state,
         items: newItems,
-        total: newTotal,
-        itemCount: newItemCount
+        total: removeTotals.total,
+        itemCount: removeTotals.itemCount,
+        numerologyDiscount: removeTotals.numerologyDiscount,
+        numerologyDiscountAmount: removeTotals.numerologyDiscountAmount
       };
 
     case 'CLEAR_CART':
@@ -79,19 +109,22 @@ const cartReducer = (state, action) => {
         ...state,
         items: [],
         total: 0,
-        itemCount: 0
+        itemCount: 0,
+        numerologyDiscount: 0,
+        numerologyDiscountAmount: 0
       };
 
     case 'LOAD_CART':
       const loadedItems = action.payload;
-      const loadedTotal = loadedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      const loadedItemCount = loadedItems.reduce((sum, item) => sum + item.quantity, 0);
+      const loadTotals = calculateTotalsWithDiscount(loadedItems, action.userNumerology);
 
       return {
         ...state,
         items: loadedItems,
-        total: loadedTotal,
-        itemCount: loadedItemCount
+        total: loadTotals.total,
+        itemCount: loadTotals.itemCount,
+        numerologyDiscount: loadTotals.numerologyDiscount,
+        numerologyDiscountAmount: loadTotals.numerologyDiscountAmount
       };
 
     default:
@@ -101,6 +134,23 @@ const cartReducer = (state, action) => {
 
 export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initialState);
+  const [userNumerology, setUserNumerology] = useState(null);
+
+  // Get user numerology from localStorage or context
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user?.numerology) {
+      setUserNumerology(user.numerology);
+    }
+  }, []);
+
+  // Custom dispatch that includes user numerology
+  const dispatchWithNumerology = (action) => {
+    dispatch({
+      ...action,
+      userNumerology
+    });
+  };
 
   // Save cart to localStorage whenever it changes
   useEffect(() => {
@@ -125,7 +175,7 @@ export const CartProvider = ({ children }) => {
       price: product.finalPrice || product.price.retail
     };
 
-    dispatch({ type: 'ADD_ITEM', payload: cartItem });
+    dispatchWithNumerology({ type: 'ADD_ITEM', payload: cartItem });
     toast.success(`${product.name} added to cart!`);
   };
 
@@ -136,13 +186,13 @@ export const CartProvider = ({ children }) => {
       return;
     }
 
-    dispatch({ type: 'UPDATE_QUANTITY', payload: { id: itemId, quantity } });
+    dispatchWithNumerology({ type: 'UPDATE_QUANTITY', payload: { id: itemId, quantity } });
   };
 
   // Remove item from cart
   const removeFromCart = (itemId) => {
     const item = state.items.find(item => item.id === itemId);
-    dispatch({ type: 'REMOVE_ITEM', payload: itemId });
+    dispatchWithNumerology({ type: 'REMOVE_ITEM', payload: itemId });
     if (item) {
       toast.success(`${item.product.name} removed from cart`);
     }
@@ -150,7 +200,7 @@ export const CartProvider = ({ children }) => {
 
   // Clear cart
   const clearCart = () => {
-    dispatch({ type: 'CLEAR_CART' });
+    dispatchWithNumerology({ type: 'CLEAR_CART' });
     toast.success('Cart cleared');
   };
 
@@ -223,6 +273,8 @@ export const CartProvider = ({ children }) => {
     items: state.items,
     total: state.total,
     itemCount: state.itemCount,
+    numerologyDiscount: state.numerologyDiscount,
+    numerologyDiscountAmount: state.numerologyDiscountAmount,
     addToCart,
     updateQuantity,
     removeFromCart,

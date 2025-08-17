@@ -124,6 +124,15 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
                     </span>
                   </>
                 )}
+                {/* Numerology Discount */}
+                {numerologyDiscount && numerologyDiscount.percentage > 0 && (
+                  <div className="flex items-center space-x-1">
+                    <Sparkles className="w-4 h-4 text-purple-500" />
+                    <span className="text-sm text-purple-600 font-medium">
+                      -{numerologyDiscount.percentage}%
+                    </span>
+                  </div>
+                )}
               </div>
 
               {/* Product Details */}
@@ -262,6 +271,15 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
                 {Math.round(((originalPrice - finalPrice) / originalPrice) * 100)}% OFF
               </span>
             </>
+          )}
+          {/* Numerology Discount */}
+          {numerologyDiscount && numerologyDiscount.percentage > 0 && (
+            <div className="flex items-center space-x-1">
+              <Sparkles className="w-3 h-3 text-purple-500" />
+              <span className="text-xs text-purple-600 font-medium">
+                -{numerologyDiscount.percentage}%
+              </span>
+            </div>
           )}
         </div>
 

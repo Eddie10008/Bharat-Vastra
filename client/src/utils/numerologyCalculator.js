@@ -9,17 +9,17 @@ export const calculateLifePathNumber = (dateOfBirth) => {
   const month = date.getMonth() + 1;
   const year = date.getFullYear();
   
-  // Reduce day to single digit
-  const reducedDay = reduceToSingleDigit(day);
+  // Convert each component to string and sum all digits
+  const dayDigits = day.toString().split('').map(d => parseInt(d));
+  const monthDigits = month.toString().split('').map(d => parseInt(d));
+  const yearDigits = year.toString().split('').map(d => parseInt(d));
   
-  // Reduce month to single digit
-  const reducedMonth = reduceToSingleDigit(month);
+  const daySum = dayDigits.reduce((sum, digit) => sum + digit, 0);
+  const monthSum = monthDigits.reduce((sum, digit) => sum + digit, 0);
+  const yearSum = yearDigits.reduce((sum, digit) => sum + digit, 0);
   
-  // Reduce year to single digit
-  const reducedYear = reduceToSingleDigit(year);
-  
-  // Add all reduced numbers
-  const total = reducedDay + reducedMonth + reducedYear;
+  // Add all sums
+  const total = daySum + monthSum + yearSum;
   
   // Check for Master Numbers (11, 22, 33)
   if (total === 11 || total === 22 || total === 33) {
@@ -56,7 +56,7 @@ export const numerologyProfiles = {
     gemstones: ["Ruby", "Carnelian", "Red Jasper"],
     themes: ["Leadership", "Innovation", "Independence"],
     personality: "Ambitious, confident, and pioneering",
-    discount: 5,
+    discount: 10,
     productRecommendations: ["Bold traditional sarees", "Red and orange color schemes", "Statement jewelry"]
   },
   2: {
@@ -70,7 +70,7 @@ export const numerologyProfiles = {
     gemstones: ["Pearl", "Moonstone", "Aquamarine"],
     themes: ["Harmony", "Partnership", "Intuition"],
     personality: "Cooperative, diplomatic, and intuitive",
-    discount: 8,
+    discount: 12,
     productRecommendations: ["Soft pastel sarees", "Pearl jewelry", "Floral patterns"]
   },
   3: {
@@ -84,7 +84,7 @@ export const numerologyProfiles = {
     gemstones: ["Citrine", "Yellow Sapphire", "Amber"],
     themes: ["Creativity", "Expression", "Joy"],
     personality: "Optimistic, creative, and sociable",
-    discount: 12,
+    discount: 14,
     productRecommendations: ["Bright colorful sarees", "Artistic designs", "Bold jewelry"]
   },
   4: {
@@ -98,7 +98,7 @@ export const numerologyProfiles = {
     gemstones: ["Sapphire", "Emerald", "Amethyst"],
     themes: ["Stability", "Organization", "Dedication"],
     personality: "Reliable, practical, and disciplined",
-    discount: 15,
+    discount: 16,
     productRecommendations: ["Classic silk sarees", "Traditional designs", "Elegant jewelry"]
   },
   5: {
@@ -140,7 +140,7 @@ export const numerologyProfiles = {
     gemstones: ["Amethyst", "Lapis Lazuli", "Clear Quartz"],
     themes: ["Spirituality", "Wisdom", "Analysis"],
     personality: "Spiritual, analytical, and introspective",
-    discount: 22,
+    discount: 18,
     productRecommendations: ["Mystical sarees", "Spiritual symbols", "Crystal jewelry"]
   },
   8: {
@@ -154,7 +154,7 @@ export const numerologyProfiles = {
     gemstones: ["Diamond", "Yellow Sapphire", "Tiger's Eye"],
     themes: ["Success", "Power", "Material Achievement"],
     personality: "Ambitious, powerful, and materialistic",
-    discount: 25,
+    discount: 16,
     productRecommendations: ["Luxury silk sarees", "Gold embroidery", "Precious jewelry"]
   },
   9: {
@@ -168,7 +168,7 @@ export const numerologyProfiles = {
     gemstones: ["Opal", "Pink Tourmaline", "Rose Quartz"],
     themes: ["Compassion", "Universal Love", "Completion"],
     personality: "Compassionate, idealistic, and humanitarian",
-    discount: 28,
+    discount: 14,
     productRecommendations: ["Artistic sarees", "Unique designs", "Charitable collections"]
   },
   11: {
