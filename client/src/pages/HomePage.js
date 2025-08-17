@@ -59,13 +59,13 @@ const HomePage = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative divine-gradient overflow-hidden">
+      <section className="relative bg-gradient-to-br from-gray-50 via-white to-gray-100 overflow-hidden">
         <div className="absolute inset-0 chakra-pattern"></div>
-        <div className="absolute top-10 left-10 opacity-10">
-          <DecorativePattern variant="mandala" size="xl" opacity={0.4} />
+        <div className="absolute top-10 left-10 opacity-5">
+          <DecorativePattern variant="mandala" size="xl" opacity={0.3} />
         </div>
-        <div className="absolute bottom-10 right-10 opacity-10">
-          <DecorativePattern variant="mandala" size="xl" opacity={0.4} />
+        <div className="absolute bottom-10 right-10 opacity-5">
+          <DecorativePattern variant="mandala" size="xl" opacity={0.3} />
         </div>
         <div className="relative container-max px-4 py-20 lg:py-32">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -105,11 +105,11 @@ const HomePage = () => {
                   className="rounded-2xl shadow-2xl"
                 />
               </div>
-              <div className="absolute -top-4 -right-4 w-32 h-32 bg-spiritual-orange-200 rounded-full animate-float">
-                <DecorativePattern variant="minimal" size="full" opacity={0.3} />
+              <div className="absolute -top-4 -right-4 w-32 h-32 bg-gray-200 rounded-full animate-float">
+                <DecorativePattern variant="minimal" size="full" opacity={0.2} />
               </div>
-              <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-spiritual-purple-200 rounded-full animate-float-delayed">
-                <DecorativePattern variant="minimal" size="full" opacity={0.3} />
+              <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-gray-300 rounded-full animate-float-delayed">
+                <DecorativePattern variant="minimal" size="full" opacity={0.2} />
               </div>
             </div>
           </div>
@@ -117,7 +117,7 @@ const HomePage = () => {
       </section>
 
       {/* Features Section */}
-      <section className="section-padding earth-gradient">
+      <section className="section-padding bg-gray-50">
         <div className="container-max">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-serif font-bold text-gray-900 mb-4">
@@ -130,7 +130,7 @@ const HomePage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
               <div key={index} className="text-center group">
-                <div className="w-16 h-16 bg-gradient-to-br from-spiritual-orange-100 to-spiritual-yellow-100 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 ganesha-border">
+                <div className="w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 ganesha-border">
                   {feature.icon}
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.title}</h3>
@@ -244,7 +244,7 @@ const HomePage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding spiritual-gradient text-white">
+      <section className="section-padding bg-gradient-to-r from-gray-800 to-gray-900 text-white">
         <div className="container-max text-center">
           <h2 className="text-3xl lg:text-4xl font-serif font-bold mb-6">
             Ready to Experience Divine Fashion?
@@ -255,13 +255,13 @@ const HomePage = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/register"
-              className="bg-spiritual-gold-500 hover:bg-spiritual-gold-600 text-white font-semibold py-4 px-8 rounded-lg transition-colors text-lg"
+              className="bg-white text-gray-900 hover:bg-gray-100 font-semibold py-4 px-8 rounded-lg transition-colors text-lg"
             >
               Start Shopping
             </Link>
             <Link
               to="/about"
-              className="border-2 border-white text-white hover:bg-white hover:text-spiritual-purple-600 font-semibold py-4 px-8 rounded-lg transition-colors text-lg"
+              className="border-2 border-white text-white hover:bg-white hover:text-gray-900 font-semibold py-4 px-8 rounded-lg transition-colors text-lg"
             >
               Learn More
             </Link>

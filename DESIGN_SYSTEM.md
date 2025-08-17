@@ -2,18 +2,19 @@
 
 ## Overview
 
-The Bharat Vastra platform incorporates a unique design system inspired by the Ganesha logo, featuring spiritual colors, geometric patterns, mandala-inspired elements, and traditional Indian design principles while maintaining a modern, clean aesthetic. The design system celebrates spiritual heritage through carefully chosen colors that carry deep symbolic meaning.
+The Bharat Vastra platform incorporates a unique design system inspired by the Ganesha logo, featuring a monochromatic design with geometric patterns, mandala-inspired elements, and traditional Indian design principles while maintaining a modern, clean aesthetic. The design system celebrates spiritual heritage through the timeless elegance of black and white design.
 
 ## Logo Design
 
 ### Ganesha Logo
 The central logo features Lord Ganesha seated on a stylized map of India, surrounded by geometric and astrological elements:
 
-- **Central Figure**: Ganesha in meditative pose with traditional attributes
-- **Geometric Framework**: Concentric circles, connecting lines, and nodes
-- **Astrological Elements**: Compass-like symbols and celestial references
-- **India Map**: Silhouette of the Indian subcontinent as the base
-- **Color Scheme**: Monochromatic black and white for versatility
+- **Central Figure**: Ganesha in meditative pose with traditional attributes (axe, noose, blessing gesture, modak)
+- **Geometric Framework**: Concentric circles, connecting lines, and nodes of varying sizes
+- **Astrological Elements**: Compass-like symbols with directional arrows and celestial references
+- **India Map**: Detailed silhouette of the Indian subcontinent with state boundaries
+- **Color Scheme**: Monochromatic black and white for timeless elegance
+- **Traditional Attributes**: Four arms with specific mudras and sacred objects
 
 ### Logo Usage
 - **Header**: Primary logo with text
@@ -31,20 +32,11 @@ Four pattern variants inspired by the logo:
 - **Mandala**: Radial pattern with 8-point symmetry
 - **Minimal**: Simplified geometric elements
 
-### 2. Spiritual Color Palette
-- **Red** (#dc2626) - Passion, energy, vitality, protection, sacrifice
-- **Purple** (#9333ea) - Royalty, dignity, spirituality, wisdom, divine connection
-- **Gold** (#f59e0b) - Wealth, spiritual enlightenment, divine glory, prosperity
-- **Orange** (#f97316) - Energy, happiness, vitality, spirituality, asceticism
-- **Yellow** (#eab308) - Happiness, hope, intellect, divine light, wisdom
-- **Green** (#22c55e) - Nature, life, growth, new beginnings, prosperity
-- **Blue** (#3b82f6) - Calmness, peace, responsibility, divine protection
-- **Indigo** (#6366f1) - Intuition, wisdom, spiritual insight, deep knowledge
-- **Teal** (#14b8a6) - Communication, healing, emotional balance, harmony
-- **Magenta** (#ec4899) - Universal love, compassion, spiritual awakening
-- **Brown** (#bfa094) - Earth, stability, grounding, connection to nature
+### 2. Monochromatic Color Palette
+- **Black** (#000000) - Protection, mystery, elegance, strength, grounding
 - **White** (#ffffff) - Purity, innocence, peace, new beginnings, divine light
-- **Black** (#000000) - Protection, uncrossing, warding off negative energy, mystery
+- **Gray Scale** - Balance, neutrality, sophistication, timelessness
+- **Monochromatic Design** - Focus on form, texture, and spiritual symbolism
 
 ### 3. Typography
 - **Serif**: Playfair Display for headings and brand elements
@@ -168,4 +160,4 @@ client/src/
 └── tailwind.config.js      # Color and font configuration
 ```
 
-This design system ensures consistent branding across the Bharat Vastra platform while celebrating Indian spiritual heritage through carefully chosen colors and modern design principles. Each color carries deep symbolic meaning, creating a profound connection between the platform and its spiritual roots.
+This design system ensures consistent branding across the Bharat Vastra platform while celebrating Indian spiritual heritage through the timeless elegance of monochromatic design and modern design principles. The black and white aesthetic creates a profound connection between the platform and its spiritual roots, emphasizing form and symbolism over color.

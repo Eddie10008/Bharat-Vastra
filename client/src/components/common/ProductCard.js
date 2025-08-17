@@ -24,11 +24,11 @@ const ProductCard = ({ product }) => {
   };
 
   const formatPrice = (price) => {
-    return new Intl.NumberFormat('en-IN', {
+    return new Intl.NumberFormat('en-AU', {
       style: 'currency',
-      currency: 'INR',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
+      currency: 'AUD',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
     }).format(price);
   };
 
@@ -71,21 +71,21 @@ const ProductCard = ({ product }) => {
         {/* Quick add to cart */}
         <button
           onClick={handleAddToCart}
-          className="absolute bottom-2 right-2 p-2 bg-spiritual-purple-600 text-white rounded-full hover:bg-spiritual-purple-700 transition-colors opacity-0 group-hover:opacity-100"
+          className="absolute bottom-2 right-2 p-2 bg-gray-800 text-white rounded-full hover:bg-gray-900 transition-colors opacity-0 group-hover:opacity-100"
         >
           <ShoppingCart size={16} />
         </button>
 
         {/* Sale badge */}
         {product.finalPrice && product.finalPrice < originalPrice && (
-          <div className="absolute top-2 left-1/2 transform -translate-x-1/2 bg-spiritual-red-500 text-white text-xs font-medium px-2 py-1 rounded-full">
+          <div className="absolute top-2 left-1/2 transform -translate-x-1/2 bg-red-600 text-white text-xs font-medium px-2 py-1 rounded-full">
             SALE
           </div>
         )}
 
         {/* Wholesale badge */}
         {product.isWholesale && (
-          <div className="absolute bottom-2 left-2 bg-spiritual-blue-500 text-white text-xs font-medium px-2 py-1 rounded-full">
+          <div className="absolute bottom-2 left-2 bg-blue-600 text-white text-xs font-medium px-2 py-1 rounded-full">
             WHOLESALE
           </div>
         )}
