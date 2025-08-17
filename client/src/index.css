@@ -77,11 +77,23 @@
   }
 
   .gradient-text {
-    @apply bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-primary-600 via-spiritual-orange-500 to-secondary-600 bg-clip-text text-transparent;
   }
 
   .hero-gradient {
-    @apply bg-gradient-to-br from-primary-50 via-white to-accent-50;
+    @apply bg-gradient-to-br from-spiritual-orange-50 via-white to-spiritual-yellow-50;
+  }
+
+  .spiritual-gradient {
+    @apply bg-gradient-to-br from-spiritual-indigo-500 via-spiritual-purple-500 to-spiritual-magenta-500;
+  }
+
+  .earth-gradient {
+    @apply bg-gradient-to-br from-spiritual-brown-100 via-spiritual-green-50 to-spiritual-teal-50;
+  }
+
+  .divine-gradient {
+    @apply bg-gradient-to-br from-spiritual-gold-100 via-spiritual-yellow-50 to-spiritual-orange-50;
   }
 
   .section-padding {
