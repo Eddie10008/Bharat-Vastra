@@ -122,6 +122,30 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Google OAuth login
+  const googleLogin = async (token) => {
+    try {
+      dispatch({ type: 'AUTH_START' });
+      const response = await axios.post('/api/auth/google', { token });
+      
+      const { token: jwtToken, user } = response.data;
+      localStorage.setItem('token', jwtToken);
+      
+      dispatch({
+        type: 'AUTH_SUCCESS',
+        payload: { user, token: jwtToken }
+      });
+      
+      toast.success('Google login successful!');
+      return { success: true };
+    } catch (error) {
+      const message = error.response?.data?.message || 'Google login failed';
+      dispatch({ type: 'AUTH_FAILURE', payload: message });
+      toast.error(message);
+      return { success: false, error: message };
+    }
+  };
+
   // Login user
   const login = async (credentials) => {
     try {
@@ -162,7 +186,13 @@ export const AuthProvider = ({ children }) => {
   // Update user profile
   const updateProfile = async (profileData) => {
     try {
-      const response = await axios.put('/api/users/profile', profileData);
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      };
+      
+      const response = await axios.put('/api/auth/complete-profile', profileData, config);
       dispatch({ type: 'UPDATE_USER', payload: response.data.user });
       toast.success('Profile updated successfully');
       return { success: true };
@@ -170,6 +200,17 @@ export const AuthProvider = ({ children }) => {
       const message = error.response?.data?.message || 'Profile update failed';
       toast.error(message);
       return { success: false, error: message };
+    }
+  };
+
+  // Get special offers
+  const getSpecialOffers = async () => {
+    try {
+      const response = await axios.get('/api/auth/special-offers');
+      return response.data;
+    } catch (error) {
+      console.error('Get special offers error:', error);
+      return null;
     }
   };
 
@@ -225,8 +266,10 @@ export const AuthProvider = ({ children }) => {
     error: state.error,
     register,
     login,
+    googleLogin,
     logout,
     updateProfile,
+    getSpecialOffers,
     changePassword,
     forgotPassword,
     resetPassword,

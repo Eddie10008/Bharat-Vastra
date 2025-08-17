@@ -5,6 +5,8 @@ const { body, validationResult } = require('express-validator');
 const { OAuth2Client } = require('google-auth-library');
 const User = require('../models/User');
 const { auth } = require('../middleware/auth');
+const upload = require('../middleware/upload'); // Added for file upload
+const cloudinary = require('../utils/cloudinary'); // Added for cloudinary
 
 const router = express.Router();
 
@@ -340,12 +342,11 @@ router.get('/me', auth, async (req, res) => {
 });
 
 // @route   PUT /api/auth/complete-profile
-// @desc    Complete user profile
+// @desc    Complete user profile with file upload
 // @access  Private
-router.put('/complete-profile', auth, [
+router.put('/complete-profile', auth, upload.single('profileImage'), [
   body('phone').isMobilePhone().withMessage('Please enter a valid phone number'),
-  body('addresses').isArray().withMessage('At least one address is required'),
-  body('role').optional().isIn(['customer', 'seller', 'wholesaler']).withMessage('Invalid role')
+  body('addresses').isJSON().withMessage('Addresses must be valid JSON')
 ], async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -374,9 +375,26 @@ router.put('/complete-profile', auth, [
       bio
     } = req.body;
 
+    // Handle profile image upload
+    if (req.file) {
+      try {
+        // Upload to cloudinary
+        const result = await cloudinary.uploader.upload(req.file.path, {
+          folder: 'bharat-vastra/profiles',
+          width: 300,
+          height: 300,
+          crop: 'fill'
+        });
+        user.profileImage = result.secure_url;
+      } catch (uploadError) {
+        console.error('Image upload error:', uploadError);
+        return res.status(500).json({ message: 'Failed to upload profile image' });
+      }
+    }
+
     // Update basic info
     user.phone = phone;
-    user.addresses = addresses;
+    user.addresses = JSON.parse(addresses);
     user.dateOfBirth = dateOfBirth;
     user.gender = gender;
     user.bio = bio;
