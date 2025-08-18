@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Search, 
-  Filter, 
   Eye, 
   Truck, 
   CheckCircle, 
@@ -10,17 +9,12 @@ import {
   AlertCircle,
   Download,
   Printer,
-  MessageSquare,
-  Calendar,
   DollarSign,
   Package,
   User,
   MapPin,
   Phone,
-  Mail,
-  MoreVertical,
-  ArrowRight,
-  Star
+  Mail
 } from 'lucide-react';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 
@@ -40,6 +34,7 @@ const SellerOrdersPage = () => {
 
   useEffect(() => {
     fetchOrders();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagination.currentPage, statusFilter, dateFilter, sortBy]);
 
   const fetchOrders = async () => {
@@ -194,6 +189,9 @@ const SellerOrdersPage = () => {
         actions.push(
           { label: 'Mark Delivered', action: 'delivered', color: 'bg-green-600 hover:bg-green-700' }
         );
+        break;
+      default:
+        // No actions for other statuses
         break;
     }
     
