@@ -235,6 +235,15 @@ const Header = () => {
               >
                 Wholesale
               </Link>
+              {(user?.role === 'seller' || user?.role === 'wholesaler') && (
+                <Link
+                  to="/seller/dashboard"
+                  className="py-4 text-orange-600 hover:text-orange-700 font-medium transition-colors flex items-center space-x-1"
+                >
+                  <span>🏪</span>
+                  <span>Seller Portal</span>
+                </Link>
+              )}
               <Link
                 to="/about"
                 className="py-4 text-gray-700 hover:text-black font-medium transition-colors"
