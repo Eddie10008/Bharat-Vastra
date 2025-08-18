@@ -25,6 +25,8 @@ import WishlistPage from './pages/WishlistPage';
 import SellerDashboardPage from './pages/SellerDashboardPage';
 import SellerProductsPage from './pages/SellerProductsPage';
 import SellerOrdersPage from './pages/SellerOrdersPage';
+import SellerDropshippingPage from './pages/SellerDropshippingPage';
+import SellerProductFormPage from './pages/SellerProductFormPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -110,6 +112,21 @@ function App() {
             <Route path="/seller/orders" element={
               <SellerRoute>
                 <SellerOrdersPage />
+              </SellerRoute>
+            } />
+            <Route path="/seller/dropshipping" element={
+              <SellerRoute>
+                <SellerDropshippingPage />
+              </SellerRoute>
+            } />
+            <Route path="/seller/products/new" element={
+              <SellerRoute>
+                <SellerProductFormPage />
+              </SellerRoute>
+            } />
+            <Route path="/seller/products/:id/edit" element={
+              <SellerRoute>
+                <SellerProductFormPage />
               </SellerRoute>
             } />
 

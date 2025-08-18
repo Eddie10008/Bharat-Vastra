@@ -328,4 +328,291 @@ router.get('/products', [auth, isSeller], async (req, res) => {
   }
 });
 
+// @route   POST /api/sellers/products
+// @desc    Create a new product
+// @access  Private (Seller)
+router.post('/products', [auth, isSeller], async (req, res) => {
+  try {
+    const productData = {
+      ...req.body,
+      seller: req.user.id
+    };
+
+    const product = new Product(productData);
+    await product.save();
+
+    res.status(201).json({
+      message: 'Product created successfully',
+      product
+    });
+
+  } catch (error) {
+    console.error('Create product error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// @route   PUT /api/sellers/products/:id
+// @desc    Update a product
+// @access  Private (Seller)
+router.put('/products/:id', [auth, isSeller], async (req, res) => {
+  try {
+    const product = await Product.findOneAndUpdate(
+      { _id: req.params.id, seller: req.user.id },
+      req.body,
+      { new: true, runValidators: true }
+    );
+
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    res.json({
+      message: 'Product updated successfully',
+      product
+    });
+
+  } catch (error) {
+    console.error('Update product error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// @route   GET /api/sellers/products/:id
+// @desc    Get a specific product
+// @access  Private (Seller)
+router.get('/products/:id', [auth, isSeller], async (req, res) => {
+  try {
+    const product = await Product.findOne({
+      _id: req.params.id,
+      seller: req.user.id
+    });
+
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    res.json({ product });
+
+  } catch (error) {
+    console.error('Get product error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// @route   PUT /api/sellers/orders/:id/status
+// @desc    Update order status
+// @access  Private (Seller)
+router.put('/orders/:id/status', [auth, isSeller], async (req, res) => {
+  try {
+    const { status } = req.body;
+    const order = await Order.findOneAndUpdate(
+      { _id: req.params.id, seller: req.user.id },
+      { 
+        status,
+        $push: {
+          statusHistory: {
+            status,
+            note: `Status updated to ${status}`,
+            updatedBy: req.user.id
+          }
+        }
+      },
+      { new: true }
+    );
+
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    res.json({
+      message: 'Order status updated successfully',
+      order
+    });
+
+  } catch (error) {
+    console.error('Update order status error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// @route   PUT /api/sellers/orders/bulk-status
+// @desc    Update multiple order statuses
+// @access  Private (Seller)
+router.put('/orders/bulk-status', [auth, isSeller], async (req, res) => {
+  try {
+    const { orderIds, status } = req.body;
+
+    const result = await Order.updateMany(
+      { _id: { $in: orderIds }, seller: req.user.id },
+      { 
+        status,
+        $push: {
+          statusHistory: {
+            status,
+            note: `Bulk status update to ${status}`,
+            updatedBy: req.user.id
+          }
+        }
+      }
+    );
+
+    res.json({
+      message: `${result.modifiedCount} orders updated successfully`,
+      modifiedCount: result.modifiedCount
+    });
+
+  } catch (error) {
+    console.error('Bulk update order status error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// @route   POST /api/sellers/products/bulk-action
+// @desc    Perform bulk actions on products
+// @access  Private (Seller)
+router.post('/products/bulk-action', [auth, isSeller], async (req, res) => {
+  try {
+    const { productIds, action } = req.body;
+
+    let updateData = {};
+    switch (action) {
+      case 'activate':
+        updateData = { status: 'active' };
+        break;
+      case 'deactivate':
+        updateData = { status: 'inactive' };
+        break;
+      case 'delete':
+        await Product.deleteMany({ _id: { $in: productIds }, seller: req.user.id });
+        return res.json({ message: 'Products deleted successfully' });
+      default:
+        return res.status(400).json({ message: 'Invalid action' });
+    }
+
+    const result = await Product.updateMany(
+      { _id: { $in: productIds }, seller: req.user.id },
+      updateData
+    );
+
+    res.json({
+      message: `${result.modifiedCount} products updated successfully`,
+      modifiedCount: result.modifiedCount
+    });
+
+  } catch (error) {
+    console.error('Bulk action error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Dropshipping routes
+// @route   GET /api/sellers/dropshipping/suppliers
+// @desc    Get dropshipping suppliers
+// @access  Private (Seller)
+router.get('/dropshipping/suppliers', [auth, isSeller], async (req, res) => {
+  try {
+    // This would typically fetch from a dropshipping suppliers collection
+    // For now, returning mock data
+    const suppliers = [
+      {
+        _id: '1',
+        name: 'Fashion Supplier Co.',
+        type: 'wholesale',
+        email: 'contact@fashionsupplier.com',
+        phone: '+1234567890',
+        location: 'Mumbai, India',
+        status: 'active',
+        productCount: 150,
+        lastSync: new Date()
+      },
+      {
+        _id: '2',
+        name: 'Jewelry Wholesale',
+        type: 'jewelry',
+        email: 'info@jewelrywholesale.com',
+        phone: '+1234567891',
+        location: 'Jaipur, India',
+        status: 'active',
+        productCount: 75,
+        lastSync: new Date()
+      }
+    ];
+
+    res.json({ suppliers });
+
+  } catch (error) {
+    console.error('Get suppliers error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// @route   GET /api/sellers/dropshipping/products
+// @desc    Get dropshipping products
+// @access  Private (Seller)
+router.get('/dropshipping/products', [auth, isSeller], async (req, res) => {
+  try {
+    // This would typically fetch from a dropshipping products collection
+    // For now, returning mock data
+    const products = [
+      {
+        _id: '1',
+        name: 'Silk Saree Collection',
+        category: 'sari',
+        price: 299.99,
+        stock: 50,
+        status: 'available',
+        supplier: { name: 'Fashion Supplier Co.' },
+        image: 'https://via.placeholder.com/300x400'
+      },
+      {
+        _id: '2',
+        name: 'Kundan Necklace Set',
+        category: 'necklaces',
+        price: 199.99,
+        stock: 25,
+        status: 'available',
+        supplier: { name: 'Jewelry Wholesale' },
+        image: 'https://via.placeholder.com/300x400'
+      }
+    ];
+
+    res.json({ products });
+
+  } catch (error) {
+    console.error('Get dropshipping products error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// @route   POST /api/sellers/dropshipping/suppliers/:id/sync
+// @desc    Sync supplier data
+// @access  Private (Seller)
+router.post('/dropshipping/suppliers/:id/sync', [auth, isSeller], async (req, res) => {
+  try {
+    // This would typically sync with the supplier's API
+    // For now, just returning success
+    res.json({ message: 'Supplier synced successfully' });
+
+  } catch (error) {
+    console.error('Sync supplier error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// @route   POST /api/sellers/dropshipping/products/:id/import
+// @desc    Import dropshipping product
+// @access  Private (Seller)
+router.post('/dropshipping/products/:id/import', [auth, isSeller], async (req, res) => {
+  try {
+    // This would typically import the product from dropshipping supplier
+    // For now, just returning success
+    res.json({ message: 'Product imported successfully' });
+
+  } catch (error) {
+    console.error('Import product error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 module.exports = router;
