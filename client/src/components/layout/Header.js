@@ -34,21 +34,21 @@ const Header = () => {
   ];
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+    <header className="bg-white shadow-lg border-b border-gray-100 sticky top-0 z-50 backdrop-blur-sm bg-white/95">
       {/* Top bar */}
-      <div className="bg-black text-white py-2">
+      <div className="bg-gradient-to-r from-divine-purple-600 to-divine-orange-500 text-white py-3">
         <div className="container-max px-4">
           <div className="flex justify-between items-center text-sm">
-            <div className="flex items-center space-x-4">
-              <span>🪔 Premium Indian Attire & Jewelry</span>
-              <span>|</span>
-              <span>Free Shipping on Orders Above $150</span>
+            <div className="flex items-center space-x-6">
+              <span className="font-medium">🪔 Premium Indian Attire & Jewelry</span>
+              <span className="hidden sm:inline">|</span>
+              <span className="hidden sm:inline">Free Shipping on Orders Above $150</span>
             </div>
-            <div className="hidden md:flex items-center space-x-4">
-              <a href="tel:+91-XXXXXXXXXX" className="hover:text-gray-300 transition-colors">
+            <div className="hidden md:flex items-center space-x-6">
+              <a href="tel:+91-XXXXXXXXXX" className="hover:text-divine-yellow-200 transition-colors duration-300">
                 📞 +91-XXXXXXXXXX
               </a>
-              <a href="mailto:support@bharatvastra.com" className="hover:text-gray-300 transition-colors">
+              <a href="mailto:support@bharatvastra.com" className="hover:text-divine-yellow-200 transition-colors duration-300">
                 ✉️ support@bharatvastra.com
               </a>
             </div>
@@ -57,7 +57,7 @@ const Header = () => {
       </div>
 
       {/* Main header */}
-      <div className="container-max px-4 py-4">
+      <div className="container-max px-4 py-6">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center">
@@ -73,11 +73,11 @@ const Header = () => {
                   placeholder="Search for sarees, lehengas, jewelry..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-4 pr-12 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all duration-300"
+                  className="input-field"
                 />
                 <button
                   type="submit"
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-gray-500 hover:text-black transition-colors"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 p-2 text-gray-500 hover:text-divine-purple-600 transition-colors duration-300"
                 >
                   <Search size={20} />
                 </button>
@@ -86,22 +86,22 @@ const Header = () => {
           </div>
 
           {/* Right side icons */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-6">
             {/* Wishlist */}
-            <Link to="/wishlist" className="relative p-2 text-gray-600 hover:text-black transition-colors">
+            <Link to="/wishlist" className="relative p-3 text-gray-600 hover:text-divine-purple-600 transition-all duration-300 hover:bg-divine-purple-50 rounded-xl">
               <Heart size={24} />
               {wishlistCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-black text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-gradient-to-r from-divine-purple-600 to-divine-orange-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-semibold shadow-lg">
                   {wishlistCount}
                 </span>
               )}
             </Link>
 
             {/* Cart */}
-            <Link to="/cart" className="relative p-2 text-gray-600 hover:text-black transition-colors">
+            <Link to="/cart" className="relative p-3 text-gray-600 hover:text-divine-purple-600 transition-all duration-300 hover:bg-divine-purple-50 rounded-xl">
               <ShoppingCart size={24} />
               {itemCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-black text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-gradient-to-r from-divine-purple-600 to-divine-orange-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-semibold shadow-lg">
                   {itemCount}
                 </span>
               )}
@@ -112,27 +112,27 @@ const Header = () => {
               <div className="relative">
                 <button
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className="flex items-center space-x-2 p-2 text-gray-600 hover:text-black transition-colors"
+                  className="flex items-center space-x-3 p-3 text-gray-600 hover:text-divine-purple-600 transition-all duration-300 hover:bg-divine-purple-50 rounded-xl"
                 >
                   <User size={24} />
-                  <span className="hidden md:block text-sm font-medium">
+                  <span className="hidden md:block text-sm font-semibold">
                     {user?.firstName || 'User'}
                   </span>
                 </button>
 
                 {/* Dropdown menu */}
                 {isMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+                  <div className="absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-3 z-50 animate-fade-in">
                     <Link
                       to="/profile"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                      className="block px-6 py-3 text-sm text-gray-700 hover:bg-divine-purple-50 transition-colors duration-300"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       Profile
                     </Link>
                     <Link
                       to="/orders"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                      className="block px-6 py-3 text-sm text-gray-700 hover:bg-divine-purple-50 transition-colors duration-300"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       My Orders
@@ -140,16 +140,16 @@ const Header = () => {
                     {user?.role === 'seller' && (
                       <Link
                         to="/seller/dashboard"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                        className="block px-6 py-3 text-sm text-gray-700 hover:bg-divine-purple-50 transition-colors duration-300"
                         onClick={() => setIsMenuOpen(false)}
                       >
                         Seller Dashboard
                       </Link>
                     )}
-                    <hr className="my-2" />
+                    <hr className="my-3 border-gray-100" />
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center space-x-2"
+                      className="w-full text-left px-6 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors duration-300 flex items-center space-x-3"
                     >
                       <LogOut size={16} />
                       <span>Logout</span>
@@ -158,7 +158,7 @@ const Header = () => {
                 )}
               </div>
             ) : (
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-4">
                 <Link
                   to="/login"
                   className="btn-ghost"
@@ -177,7 +177,7 @@ const Header = () => {
             {/* Mobile menu button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="lg:hidden p-2 text-gray-600 hover:text-black transition-colors"
+              className="lg:hidden p-3 text-gray-600 hover:text-divine-purple-600 transition-all duration-300 hover:bg-divine-purple-50 rounded-xl"
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -185,7 +185,7 @@ const Header = () => {
         </div>
 
         {/* Mobile search */}
-        <div className="lg:hidden mt-4">
+        <div className="lg:hidden mt-6">
           <form onSubmit={handleSearch}>
             <div className="relative">
               <input
@@ -193,11 +193,11 @@ const Header = () => {
                 placeholder="Search for sarees, lehengas, jewelry..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-4 pr-12 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-black transition-all duration-300"
+                className="input-field"
               />
               <button
                 type="submit"
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-gray-500 hover:text-black transition-colors"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 p-2 text-gray-500 hover:text-divine-purple-600 transition-colors duration-300"
               >
                 <Search size={20} />
               </button>

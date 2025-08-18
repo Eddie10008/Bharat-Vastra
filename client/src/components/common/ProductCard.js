@@ -37,14 +37,14 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
 
   if (viewMode === 'list') {
     return (
-      <div className="bg-white rounded-xl shadow-soft spiritual-border overflow-hidden">
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover-lift">
         <div className="flex flex-col md:flex-row">
           {/* Product Image */}
           <div className="relative md:w-64 md:h-64 w-full h-48 overflow-hidden bg-gray-100">
             <img
               src={product.image}
               alt={product.name}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
             />
             
             {/* Decorative corner pattern */}
@@ -174,18 +174,18 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
     );
   }
 
-  // Grid view (default)
+  // Grid view (default) - AICM Inspired
   return (
     <Link 
       to={`/product/${product.id}`}
-      className="group card-hover ganesha-border rounded-xl overflow-hidden transition-all duration-300 hover:scale-105"
+      className="group product-card"
     >
       {/* Product Image */}
       <div className="relative aspect-square overflow-hidden bg-gray-100">
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-full object-cover product-image group-hover:scale-110 transition-transform duration-300"
+          className="product-image"
         />
         
         {/* Decorative corner pattern */}
