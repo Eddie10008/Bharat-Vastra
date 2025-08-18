@@ -69,21 +69,21 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
 
             {/* Sale badge */}
             {originalPrice && finalPrice < originalPrice && (
-              <div className="absolute top-2 left-1/2 transform -translate-x-1/2 bg-divine-red-500 text-white text-xs font-medium px-2 py-1 rounded-full">
+              <div className="absolute top-3 left-3 bg-gradient-to-r from-red-500 to-red-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg">
                 SALE
               </div>
             )}
 
             {/* New badge */}
             {product.isNew && (
-              <div className="absolute bottom-2 left-2 bg-divine-green-500 text-white text-xs font-medium px-2 py-1 rounded-full">
+              <div className="absolute top-3 left-3 bg-gradient-to-r from-green-500 to-green-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg">
                 NEW
               </div>
             )}
 
             {/* Wholesale badge */}
             {product.isWholesale && (
-              <div className="absolute bottom-2 right-2 bg-divine-blue-500 text-white text-xs font-medium px-2 py-1 rounded-full">
+              <div className="absolute bottom-3 right-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg">
                 WHOLESALE
               </div>
             )}
@@ -218,48 +218,48 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
 
         {/* Sale badge */}
         {originalPrice && finalPrice < originalPrice && (
-          <div className="absolute top-2 left-1/2 transform -translate-x-1/2 bg-red-600 text-white text-xs font-medium px-2 py-1 rounded-full">
+          <div className="absolute top-3 left-3 bg-gradient-to-r from-red-500 to-red-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg">
             SALE
           </div>
         )}
 
         {/* New badge */}
         {product.isNew && (
-          <div className="absolute top-2 left-1/2 transform -translate-x-1/2 bg-green-600 text-white text-xs font-medium px-2 py-1 rounded-full">
+          <div className="absolute top-3 left-3 bg-gradient-to-r from-green-500 to-green-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg">
             NEW
           </div>
         )}
 
         {/* Wholesale badge */}
         {product.isWholesale && (
-          <div className="absolute bottom-2 left-2 bg-blue-600 text-white text-xs font-medium px-2 py-1 rounded-full">
+          <div className="absolute bottom-3 right-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg">
             WHOLESALE
           </div>
         )}
       </div>
 
       {/* Product Info */}
-      <div className="p-4">
+      <div className="p-6">
         {/* Rating */}
-        <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center justify-between mb-3">
           <div className="flex items-center space-x-1">
-            <Star size={14} className="text-yellow-400 fill-current" />
-            <span className="text-sm text-gray-600">{product.rating}</span>
+            <Star size={16} className="text-yellow-400 fill-current" />
+            <span className="text-sm font-medium text-gray-700">{product.rating}</span>
             <span className="text-xs text-gray-500">({product.reviews})</span>
           </div>
-          <span className="text-xs text-gray-500 capitalize">
+          <span className="text-xs text-gray-500 capitalize font-medium">
             {product.category}
           </span>
         </div>
 
         {/* Product Name */}
-        <h3 className="font-medium text-gray-900 mb-2 line-clamp-2 group-hover:text-primary-600 transition-colors">
+        <h3 className="font-semibold text-gray-900 mb-3 line-clamp-2 group-hover:text-divine-purple-600 transition-colors duration-300">
           {product.name}
         </h3>
 
         {/* Price */}
-        <div className="flex items-center space-x-2 mb-3">
-          <span className="text-lg font-bold text-gray-900">
+        <div className="flex items-center space-x-3 mb-4">
+          <span className="text-xl font-bold text-gray-900">
             {formatCurrency(finalPrice)}
           </span>
           {originalPrice && finalPrice < originalPrice && (
@@ -267,7 +267,7 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
               <span className="text-sm text-gray-500 line-through">
                 {formatCurrency(originalPrice)}
               </span>
-              <span className="text-xs text-green-600 font-medium">
+              <span className="text-xs text-green-600 font-semibold bg-green-50 px-2 py-1 rounded-full">
                 {Math.round(((originalPrice - finalPrice) / originalPrice) * 100)}% OFF
               </span>
             </>
@@ -275,8 +275,8 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
           {/* Numerology Discount */}
           {numerologyDiscount && numerologyDiscount.percentage > 0 && (
             <div className="flex items-center space-x-1">
-              <Sparkles className="w-3 h-3 text-purple-500" />
-              <span className="text-xs text-purple-600 font-medium">
+              <Sparkles className="w-4 h-4 text-purple-500" />
+              <span className="text-xs text-purple-600 font-semibold bg-purple-50 px-2 py-1 rounded-full">
                 -{numerologyDiscount.percentage}%
               </span>
             </div>
@@ -285,19 +285,19 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
 
         {/* Colors */}
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-1">
-            <span className="text-xs text-gray-500">Colors:</span>
-            <div className="flex space-x-1">
+          <div className="flex items-center space-x-2">
+            <span className="text-sm text-gray-600 font-medium">Colors:</span>
+            <div className="flex space-x-2">
               {product.colors.slice(0, 3).map((color, index) => (
                 <div
                   key={index}
-                  className="w-3 h-3 rounded-full border border-gray-300"
+                  className="w-4 h-4 rounded-full border-2 border-gray-200 shadow-sm"
                   style={{ backgroundColor: color.toLowerCase() }}
                   title={color}
                 ></div>
               ))}
               {product.colors.length > 3 && (
-                <span className="text-xs text-gray-400">+{product.colors.length - 3}</span>
+                <span className="text-xs text-gray-400 font-medium">+{product.colors.length - 3}</span>
               )}
             </div>
           </div>
