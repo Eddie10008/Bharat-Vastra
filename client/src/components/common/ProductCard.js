@@ -7,6 +7,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { formatCurrency } from '../../config/australia';
 import { calculateDiscount } from '../../utils/numerologyCalculator';
 import DecorativePattern from './DecorativePattern';
+import AIImageLoader from './AIImageLoader';
 
 const ProductCard = ({ product, viewMode = 'grid' }) => {
   const { addToCart } = useCart();
@@ -41,10 +42,12 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
         <div className="flex flex-col md:flex-row">
           {/* Product Image */}
           <div className="relative md:w-64 md:h-64 w-full h-48 overflow-hidden bg-gray-100">
-            <img
+            <AIImageLoader
               src={product.image}
               alt={product.name}
-              className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+              fallbackType="product"
+              category={product.category}
+              className="w-full h-full transition-transform duration-700 hover:scale-110"
             />
             
             {/* Decorative corner pattern */}
@@ -182,9 +185,11 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
     >
       {/* Product Image */}
       <div className="relative aspect-square overflow-hidden bg-gray-100">
-        <img
+        <AIImageLoader
           src={product.image}
           alt={product.name}
+          fallbackType="product"
+          category={product.category}
           className="product-image"
         />
         

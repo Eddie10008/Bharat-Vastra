@@ -4,13 +4,16 @@
   "description": "Premium Indian Attire & Jewelry E-commerce Platform",
   "main": "server.js",
   "scripts": {
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run ai-bot\"",
     "server": "nodemon server.js",
     "client": "cd client && npm start",
     "build": "cd client && npm run build",
     "install-all": "npm install && cd client && npm install",
-    "start": "node server.js",
-    "ai-bot": "node ai-image-bot.js"
+    "start": "concurrently \"node server.js\" \"node start-ai-bot.js\"",
+    "ai-bot": "node ai-image-bot.js",
+    "ai-bot-start": "node start-ai-bot.js",
+    "ai-error-bot": "node ai-error-bot.js",
+    "ai-bot-start": "./start-ai-bot.sh"
   },
   "keywords": [
     "e-commerce",
@@ -40,10 +43,7 @@
     "stripe": "^13.5.0",
     "node-fetch": "^3.3.2",
     "sharp": "^0.32.6",
-    "canvas": "^2.11.2",
-    "fabric": "^5.3.0",
     "jimp": "^0.22.10",
-    "gm": "^1.25.0",
     "cron": "^2.4.4",
     "uuid": "^9.0.0",
     "fs-extra": "^11.1.1"

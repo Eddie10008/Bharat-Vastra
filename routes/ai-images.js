@@ -7,7 +7,7 @@ const fs = require('fs-extra');
 const path = require('path');
 
 // Get AI bot status and statistics
-router.get('/status', auth, async (req, res) => {
+router.get('/status', async (req, res) => {
   try {
     const stats = aiImageBot.getStats();
     res.json({

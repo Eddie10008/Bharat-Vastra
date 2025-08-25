@@ -2,8 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { exec, execSync } = require('child_process');
-const chokidar = require('chokidar');
+const { exec } = require('child_process');
 
 class AIErrorBot {
   constructor() {
@@ -13,6 +12,7 @@ class AIErrorBot {
     this.lastCheck = Date.now();
     this.errorLog = [];
     this.fixesApplied = [];
+    this.fileHashes = new Map();
     
     console.log('🤖 AI Error Bot initialized');
     console.log('📍 Project root:', this.projectRoot);
@@ -24,46 +24,10 @@ class AIErrorBot {
     // Initial check
     await this.performHealthCheck();
     
-    // Set up file watchers for real-time monitoring
-    this.setupFileWatchers();
-    
     // Start periodic checks
     setInterval(async () => {
       await this.performHealthCheck();
     }, 108000); // 108 seconds
-  }
-
-  setupFileWatchers() {
-    // Watch for package.json changes
-    const watcher = chokidar.watch([
-      'package.json',
-      'client/package.json',
-      'client/src/**/*.{js,jsx,css}',
-      'tailwind.config.js',
-      'client/tailwind.config.js'
-    ], {
-      ignored: /node_modules/,
-      persistent: true
-    });
-
-    watcher.on('change', async (filePath) => {
-      console.log(`📝 File changed: ${filePath}`);
-      await this.handleFileChange(filePath);
-    });
-
-    console.log('👀 File watchers active');
-  }
-
-  async handleFileChange(filePath) {
-    const relativePath = path.relative(this.projectRoot, filePath);
-    
-    if (relativePath.includes('package.json')) {
-      await this.checkDependencies();
-    } else if (relativePath.includes('tailwind.config.js')) {
-      await this.checkTailwindConfig();
-    } else if (relativePath.includes('.css')) {
-      await this.checkCSSErrors();
-    }
   }
 
   async performHealthCheck() {
@@ -78,12 +42,64 @@ class AIErrorBot {
       this.checkBuildErrors(),
       this.checkLintingErrors(),
       this.checkFilePermissions(),
-      this.checkEnvironmentVariables()
+      this.checkEnvironmentVariables(),
+      this.checkFileChanges()
     ];
 
     await Promise.all(checks);
     
     this.logSummary();
+  }
+
+  async checkFileChanges() {
+    try {
+      console.log('📝 Checking for file changes...');
+      
+      const criticalFiles = [
+        'package.json',
+        'client/package.json',
+        'client/src/index.css',
+        'client/tailwind.config.js'
+      ];
+      
+      for (const file of criticalFiles) {
+        const filePath = path.join(this.projectRoot, file);
+        if (fs.existsSync(filePath)) {
+          const currentHash = this.getFileHash(filePath);
+          const previousHash = this.fileHashes.get(file);
+          
+          if (previousHash && previousHash !== currentHash) {
+            console.log(`📝 File changed: ${file}`);
+            await this.handleFileChange(file);
+          }
+          
+          this.fileHashes.set(file, currentHash);
+        }
+      }
+      
+    } catch (error) {
+      console.log('❌ File change check failed:', error.message);
+      this.errorLog.push(`File change error: ${error.message}`);
+    }
+  }
+
+  getFileHash(filePath) {
+    try {
+      const stats = fs.statSync(filePath);
+      return `${stats.mtime.getTime()}-${stats.size}`;
+    } catch (e) {
+      return '0';
+    }
+  }
+
+  async handleFileChange(filePath) {
+    if (filePath.includes('package.json')) {
+      await this.checkDependencies();
+    } else if (filePath.includes('tailwind.config.js')) {
+      await this.checkTailwindConfig();
+    } else if (filePath.includes('.css')) {
+      await this.checkCSSErrors();
+    }
   }
 
   async checkDependencies() {
@@ -177,31 +193,36 @@ class AIErrorBot {
   }
 
   findUndefinedTailwindClasses(cssContent) {
-    const tailwindConfig = require(path.join(this.clientPath, 'tailwind.config.js'));
-    const definedColors = new Set();
-    
-    // Extract defined colors from config
-    if (tailwindConfig.theme && tailwindConfig.theme.extend && tailwindConfig.theme.extend.colors) {
-      Object.keys(tailwindConfig.theme.extend.colors).forEach(colorName => {
-        definedColors.add(colorName);
-        // Add numbered variants
-        for (let i = 50; i <= 900; i += 50) {
-          definedColors.add(`${colorName}-${i}`);
-        }
-      });
+    try {
+      const tailwindConfig = require(path.join(this.clientPath, 'tailwind.config.js'));
+      const definedColors = new Set();
+      
+      // Extract defined colors from config
+      if (tailwindConfig.theme && tailwindConfig.theme.extend && tailwindConfig.theme.extend.colors) {
+        Object.keys(tailwindConfig.theme.extend.colors).forEach(colorName => {
+          definedColors.add(colorName);
+          // Add numbered variants
+          for (let i = 50; i <= 900; i += 50) {
+            definedColors.add(`${colorName}-${i}`);
+          }
+        });
+      }
+      
+      // Find all color classes in CSS
+      const colorClassRegex = /(from|to|via|bg|text|border|ring|shadow)-([a-zA-Z0-9-]+)/g;
+      const foundClasses = new Set();
+      let match;
+      
+      while ((match = colorClassRegex.exec(cssContent)) !== null) {
+        foundClasses.add(match[2]);
+      }
+      
+      // Return undefined classes
+      return Array.from(foundClasses).filter(className => !definedColors.has(className));
+    } catch (error) {
+      console.log('⚠️  Could not parse Tailwind config:', error.message);
+      return [];
     }
-    
-    // Find all color classes in CSS
-    const colorClassRegex = /(from|to|via|bg|text|border|ring|shadow)-([a-zA-Z0-9-]+)/g;
-    const foundClasses = new Set();
-    let match;
-    
-    while ((match = colorClassRegex.exec(cssContent)) !== null) {
-      foundClasses.add(match[2]);
-    }
-    
-    // Return undefined classes
-    return Array.from(foundClasses).filter(className => !definedColors.has(className));
   }
 
   async fixUndefinedClasses(cssContent, cssPath, undefinedClasses) {

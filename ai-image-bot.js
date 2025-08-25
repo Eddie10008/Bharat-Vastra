@@ -3,9 +3,11 @@ const fs = require('fs-extra');
 const path = require('path');
 const sharp = require('sharp');
 const { v4: uuidv4 } = require('uuid');
-const fetch = require('node-fetch');
 const mongoose = require('mongoose');
 require('dotenv').config();
+
+// Import fetch for Node.js
+const fetch = require('node-fetch');
 
 // Import models
 const Product = require('./models/Product');
@@ -411,50 +413,57 @@ class AIImageBot {
 
   async generateFallbackImage(prompt) {
     try {
-      // Create a simple geometric pattern using sharp
+      const Jimp = require('jimp');
+      
+      // Create a simple geometric pattern using Jimp
       const width = 512;
       const height = 512;
       
-      // Generate a simple pattern based on the prompt
-      const pattern = this.createSimplePattern(prompt);
+      // Create a new image with white background
+      const image = new Jimp(width, height, 0xFFFFFFFF);
       
-      return await sharp({
-        create: {
-          width,
-          height,
-          channels: 4,
-          background: { r: 255, g: 255, b: 255, alpha: 1 }
+      // Add some geometric patterns based on the prompt
+      const color = 0x333333FF;
+      const accentColor = 0x666666FF;
+      
+      // Draw a grid pattern
+      for (let x = 0; x < width; x += 40) {
+        image.setPixelColor(color, x, 0);
+        image.setPixelColor(color, x, height - 1);
+      }
+      for (let y = 0; y < height; y += 40) {
+        image.setPixelColor(color, 0, y);
+        image.setPixelColor(color, width - 1, y);
+      }
+      
+      // Draw circles
+      const centerX = width / 2;
+      const centerY = height / 2;
+      
+      // Outer circle
+      for (let angle = 0; angle < 360; angle += 1) {
+        const x = centerX + Math.cos(angle * Math.PI / 180) * 100;
+        const y = centerY + Math.sin(angle * Math.PI / 180) * 100;
+        if (x >= 0 && x < width && y >= 0 && y < height) {
+          image.setPixelColor(color, Math.round(x), Math.round(y));
         }
-      })
-      .composite([{
-        input: Buffer.from(pattern),
-        top: 0,
-        left: 0
-      }])
-      .jpeg({ quality: 80 })
-      .toBuffer();
+      }
+      
+      // Inner circle
+      for (let angle = 0; angle < 360; angle += 1) {
+        const x = centerX + Math.cos(angle * Math.PI / 180) * 50;
+        const y = centerY + Math.sin(angle * Math.PI / 180) * 50;
+        if (x >= 0 && x < width && y >= 0 && y < height) {
+          image.setPixelColor(accentColor, Math.round(x), Math.round(y));
+        }
+      }
+      
+      // Convert to buffer
+      return await image.getBufferAsync(Jimp.MIME_JPEG);
     } catch (error) {
       console.error('Error generating fallback image:', error);
       return null;
     }
-  }
-
-  createSimplePattern(prompt) {
-    // Create a simple SVG pattern based on the prompt
-    const svg = `
-      <svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#f0f0f0" stroke-width="1"/>
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#grid)"/>
-        <circle cx="256" cy="256" r="100" fill="none" stroke="#333" stroke-width="2"/>
-        <circle cx="256" cy="256" r="50" fill="#666"/>
-      </svg>
-    `;
-    
-    return svg;
   }
 
   async processImage(imageBuffer, options = {}) {
