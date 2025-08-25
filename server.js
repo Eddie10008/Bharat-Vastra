@@ -20,6 +20,7 @@ const sellerRoutes = require('./routes/sellers');
 const categoryRoutes = require('./routes/categories');
 const searchRoutes = require('./routes/search');
 const paymentRoutes = require('./routes/payments');
+const aiImageRoutes = require('./routes/ai-images');
 
 // Security middleware
 app.use(helmet());
@@ -62,11 +63,15 @@ app.use('/api/sellers', sellerRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/search', searchRoutes);
 app.use('/api/payments', paymentRoutes);
+app.use('/api/ai-images', aiImageRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Bharat Vastra API is running' });
 });
+
+// Serve static files
+app.use('/uploads', express.static('uploads'));
 
 // Serve static files in production
 if (process.env.NODE_ENV === 'production') {

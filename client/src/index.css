@@ -24,23 +24,23 @@
 @layer components {
   /* Modern Design System - AICM Inspired */
   .btn-primary {
-    @apply bg-gradient-to-r from-divine-purple-600 to-divine-orange-500 hover:from-divine-purple-700 hover:to-divine-orange-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-divine-purple-200 focus:ring-offset-2 transform hover:scale-105 shadow-lg hover:shadow-xl;
+    @apply bg-gradient-to-r from-secondary-600 to-divine-orange-500 hover:from-secondary-700 hover:to-divine-orange-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-secondary-200 focus:ring-offset-2 transform hover:scale-105 shadow-lg hover:shadow-xl;
   }
 
   .btn-secondary {
-    @apply bg-white border-2 border-divine-purple-200 text-divine-purple-700 hover:bg-divine-purple-50 hover:border-divine-purple-300 font-semibold py-4 px-8 rounded-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-divine-purple-200 focus:ring-offset-2 transform hover:scale-105 shadow-md hover:shadow-lg;
+    @apply bg-white border-2 border-secondary-200 text-secondary-700 hover:bg-secondary-50 hover:border-secondary-300 font-semibold py-4 px-8 rounded-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-secondary-200 focus:ring-offset-2 transform hover:scale-105 shadow-md hover:shadow-lg;
   }
 
   .btn-outline {
-    @apply border-2 border-divine-purple-300 text-divine-purple-700 hover:bg-divine-purple-50 hover:border-divine-purple-400 font-semibold py-4 px-8 rounded-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-divine-purple-200 focus:ring-offset-2 transform hover:scale-105 shadow-md hover:shadow-lg;
+    @apply border-2 border-secondary-300 text-secondary-700 hover:bg-secondary-50 hover:border-secondary-400 font-semibold py-4 px-8 rounded-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-secondary-200 focus:ring-offset-2 transform hover:scale-105 shadow-md hover:shadow-lg;
   }
 
   .btn-ghost {
-    @apply text-gray-600 hover:text-divine-purple-700 hover:bg-divine-purple-50 font-medium py-4 px-8 rounded-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-divine-purple-200 focus:ring-offset-2;
+    @apply text-gray-600 hover:text-secondary-700 hover:bg-secondary-50 font-medium py-4 px-8 rounded-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-secondary-200 focus:ring-offset-2;
   }
 
   .input-field {
-    @apply w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-divine-purple-200 focus:border-divine-purple-300 transition-all duration-300 bg-white shadow-sm hover:shadow-md;
+    @apply w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-secondary-200 focus:border-secondary-300 transition-all duration-300 bg-white shadow-sm hover:shadow-md;
   }
 
   .card {
@@ -81,15 +81,15 @@
 
   /* Modern gradients with spiritual colors - AICM Inspired */
   .gradient-text {
-    @apply bg-gradient-to-r from-divine-purple-600 via-divine-orange-500 to-divine-gold-500 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-secondary-600 via-divine-orange-500 to-accent-500 bg-clip-text text-transparent;
   }
 
   .hero-gradient {
-    @apply bg-gradient-to-br from-divine-purple-50 via-white to-divine-orange-50;
+    @apply bg-gradient-to-br from-secondary-50 via-white to-divine-orange-50;
   }
 
   .divine-gradient {
-    @apply bg-gradient-to-br from-divine-purple-500 via-divine-orange-500 to-divine-gold-500;
+    @apply bg-gradient-to-br from-secondary-500 via-divine-orange-500 to-accent-500;
   }
 
   .spiritual-gradient {
@@ -211,11 +211,11 @@
   }
 
   .hover-glow {
-    @apply transition-all duration-300 hover:shadow-lg hover:shadow-divine-purple-200;
+    @apply transition-all duration-300 hover:shadow-lg hover:shadow-secondary-200;
   }
 
   .hover-border-glow {
-    @apply transition-all duration-300 hover:border-divine-purple-300 hover:shadow-md;
+    @apply transition-all duration-300 hover:border-secondary-300 hover:shadow-md;
   }
 
   /* Modern card enhancements */
