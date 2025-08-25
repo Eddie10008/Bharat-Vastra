@@ -26,23 +26,37 @@ const AIImageLoader = ({
     setLoading(true);
 
     try {
-      // Try to get AI-generated image based on fallback type
+      // Try to get accurate AI-generated image based on category
       let aiImageUrl = null;
 
       if (fallbackType === 'product' && category) {
-        // Try to get category-specific AI image
-        aiImageUrl = `/uploads/ai-generated/categories/category-${category.toLowerCase().replace(/\s+/g, '-')}*.jpg`;
+        // Try to get accurate category-specific AI image
+        const categoryLower = category.toLowerCase();
+        aiImageUrl = `/uploads/ai-generated/products/accurate-${categoryLower}-*.jpg`;
+        
+        // Set a specific accurate image based on category
+        const accurateImages = {
+          'sarees': '/uploads/ai-generated/products/accurate-sarees-329a5251-9751-4185-b6b0-23b3b3040f32.jpg',
+          'lehengas': '/uploads/ai-generated/products/accurate-lehengas-c261943a-0f6d-4d62-af0b-09d4be4d090b.jpg',
+          'kurtis': '/uploads/ai-generated/products/accurate-kurtis-c9181d20-27c0-4125-95f4-6d80673694a7.jpg',
+          'jewelry': '/uploads/ai-generated/products/accurate-jewelry-15bceaaf-e562-4059-b4fd-481711f8451c.jpg',
+          'anarkalis': '/uploads/ai-generated/products/accurate-lehengas-18842218-517f-4591-9508-f5a6ca7d4b0f.jpg'
+        };
+        
+        const specificImage = accurateImages[categoryLower];
+        if (specificImage) {
+          setImageSrc(specificImage);
+        } else {
+          // Fallback to any accurate image for the category
+          setImageSrc(`/uploads/ai-generated/products/accurate-${categoryLower}-*.jpg`);
+        }
       } else if (fallbackType === 'pattern') {
         // Try to get a pattern image
-        aiImageUrl = `/uploads/ai-generated/patterns/pattern-indian-mandala-pattern*.png`;
+        setImageSrc('/uploads/ai-generated/patterns/pattern-indian-mandala-pattern-c2623f76-2f76-434f-8989-34af48b9aff6.png');
       } else {
-        // Default fallback
-        aiImageUrl = `/uploads/ai-generated/products/product-*.jpg`;
+        // Default fallback to accurate product image
+        setImageSrc('/uploads/ai-generated/products/accurate-sarees-329a5251-9751-4185-b6b0-23b3b3040f32.jpg');
       }
-
-      // For now, we'll use a placeholder with AI-generated styling
-      // In a real implementation, you'd fetch the actual AI image from your server
-      setImageSrc(`/uploads/ai-generated/placeholder-${fallbackType}.jpg`);
     } catch (err) {
       // Final fallback to a simple placeholder
       setImageSrc(`data:image/svg+xml;base64,${btoa(`
